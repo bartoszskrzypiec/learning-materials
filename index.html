@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pl" data-lang="pl" data-i18n-storage="lm-lang" data-i18n-default="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-title-en="Learning Materials — shared toolkit for the rendering books" data-title-pl="Learning Materials — wspólny silnik dla książek o renderowaniu">Learning Materials</title>
+<meta name="description" content="Shared graphics/i18n toolkit and a starting point for four rendering books: PxrSurface Guide, Lookdev, Pipeline and Ray Tracing dla Artystów Technicznych.">
+<script>
+(function () {
+  var d = document.documentElement, l = null;
+  var storeKey = d.dataset.i18nStorage || 'i18n-lang';
+  var fallback = d.dataset.i18nDefault === 'pl' ? 'pl' : 'en';
+  try { l = new URLSearchParams(location.search).get('lang') || localStorage.getItem(storeKey); } catch (e) {}
+  if (l !== 'en' && l !== 'pl') l = (navigator.language || '').toLowerCase().indexOf('pl') === 0 ? 'pl' : fallback;
+  d.setAttribute('data-lang', l); d.lang = l; d.classList.add('js');
+})();
+</script>
+<link rel="stylesheet" href="assets/css/widgets.css">
+<style>
+:root {
+  --bg: #f7f7f8;
+  --bg-elevated: #ffffff;
+  --text: #1c1c1e;
+  --text-muted: #63636b;
+  --border: #e1e1e6;
+  --accent: #3457d5;
+  --accent-soft: #e5eafc;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 6px 20px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141416;
+    --bg-elevated: #1d1d21;
+    --text: #ececee;
+    --text-muted: #a3a3ac;
+    --border: #333338;
+    --accent: #8098ff;
+    --accent-soft: #232a49;
+    --shadow: 0 1px 3px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.65;
+  font-size: 17px;
+}
+a { color: var(--accent); }
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.9rem 1.5rem;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.topnav__brand { font-weight: 700; text-decoration: none; color: var(--text); font-size: 1.05rem; }
+.topnav__brand span { color: var(--accent); }
+.topnav__links { display: flex; gap: 1.25rem; font-size: 0.95rem; flex-wrap: wrap; }
+.topnav__links a { color: var(--text-muted); text-decoration: none; }
+.topnav__links a:hover { color: var(--text); }
+.hero { max-width: 880px; margin: 0 auto; padding: 3.5rem 1.5rem 1.5rem; }
+.hero h1 { font-size: 2rem; margin-bottom: 0.6rem; line-height: 1.25; }
+.hero p.lead { font-size: 1.1rem; color: var(--text-muted); max-width: 62ch; }
+.section-kicker {
+  display: inline-block; font-size: 0.78rem; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--accent); font-weight: 700; margin-bottom: 0.35rem;
+}
+.page { max-width: 880px; margin: 0 auto; padding: 0.5rem 1.5rem 5rem; }
+h2 { font-size: 1.4rem; margin-top: 3rem; line-height: 1.25; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow); }
+.card h3 { margin-top: 0; font-size: 1.05rem; }
+.card p.muted { font-size: 0.95rem; }
+.muted { color: var(--text-muted); }
+.badge {
+  display: inline-block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em;
+  background: var(--accent-soft); color: var(--accent); padding: 0.15rem 0.55rem; border-radius: 999px;
+  margin-bottom: 0.6rem;
+}
+.toolkit-list { list-style: none; padding: 0; margin: 1.25rem 0; display: flex; flex-direction: column; gap: 1rem; }
+.toolkit-list li { border-left: 3px solid var(--border); padding: 0.1rem 0 0.1rem 1rem; }
+.toolkit-list code {
+  background: var(--accent-soft); color: var(--accent); border-radius: 4px; padding: 0.1em 0.4em;
+  font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 0.86em;
+}
+footer { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem 4rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
+footer a { color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<nav class="topnav topnav--i18n">
+  <a class="topnav__brand" href="index.html">Learning <span>Materials</span></a>
+  <div class="topnav__links">
+    <a href="https://github.com/bartoszskrzypiec/learning-materials">GitHub</a>
+    <a href="docs/INTEGRATION.md"><span lang="en">Integration guide</span><span lang="pl">Przewodnik integracji</span></a>
+  </div>
+  <div class="lang-switch" role="group" aria-label="Language / Język">
+    <button type="button" data-set-lang="en">EN</button>
+    <button type="button" data-set-lang="pl" class="is-active" aria-pressed="true">PL</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <p class="section-kicker"><span lang="en">Shared toolkit, not a book</span><span lang="pl">Wspólny silnik, nie książka</span></p>
+  <h1><span lang="en">One graphics and translation engine, four rendering books.</span><span lang="pl">Jeden silnik grafiki i tłumaczeń, cztery książki o renderowaniu.</span></h1>
+  <p class="lead" lang="en">
+    This repo holds the WebGL/Canvas widget engine, the bilingual EN/PL toggle,
+    the formula-tooltip system and the SVG+slider diagram pattern shared by the
+    four books below. It isn't a book itself — it's the starting point for
+    getting to any of them, and for the code they're all built on.
+  </p>
+  <p class="lead" lang="pl">
+    To repozytorium zawiera silnik widgetów WebGL/Canvas, dwujęzyczny przełącznik
+    EN/PL, system dymków z formułami i wzorzec diagramów SVG+suwak, wspólne dla
+    czterech książek poniżej. Samo w sobie nie jest książką — to punkt wyjścia,
+    z którego można przejść do dowolnej z nich, oraz do kodu, na którym wszystkie
+    się opierają.
+  </p>
+</header>
+
+<main class="page">
+  <div class="card-grid">
+    <div class="card">
+      <span class="badge"><span lang="en">Live</span><span lang="pl">Na żywo</span></span>
+      <h3>PxrSurface Guide</h3>
+      <p class="muted" lang="en">
+        Plain-language guides for artists moving between AiStandardSurface and
+        PxrSurface — with live WebGL widgets for Fresnel, metalness, subsurface
+        scattering, Beckmann vs GGX, anisotropy and fuzz. Bilingual EN/PL.
+      </p>
+      <p class="muted" lang="pl">
+        Przewodniki prostym językiem dla artystów przechodzących między
+        AiStandardSurface a PxrSurface — z żywymi widgetami WebGL dla Fresnela,
+        metaliczności, subsurface scattering, Beckmann vs GGX, anizotropii i
+        fuzzu. Dwujęzyczne EN/PL.
+      </p>
+      <p><a href="https://bartoszskrzypiec.github.io/pxrsurface-guide/"><span lang="en">Open guide →</span><span lang="pl">Otwórz przewodnik →</span></a></p>
+    </div>
+
+    <div class="card">
+      <span class="badge"><span lang="en">Live</span><span lang="pl">Na żywo</span></span>
+      <h3>Lookdev dla Artystów Technicznych</h3>
+      <p class="muted" lang="en">
+        A look-development and colour book for technical artists — materials,
+        shading models and the reasoning behind them.
+      </p>
+      <p class="muted" lang="pl">
+        Książka o lookdevie i kolorze dla artystów technicznych — materiały,
+        modele shadingu i uzasadnienie stojące za nimi.
+      </p>
+      <p><a href="https://bartoszskrzypiec.github.io/lookdev-book/"><span lang="en">Open book →</span><span lang="pl">Otwórz książkę →</span></a></p>
+    </div>
+
+    <div class="card">
+      <span class="badge"><span lang="en">Live</span><span lang="pl">Na żywo</span></span>
+      <h3>Pipeline dla Artystów Technicznych</h3>
+      <p class="muted" lang="en">
+        A production-pipeline book for technical artists — the systems and
+        conventions that hold a show together.
+      </p>
+      <p class="muted" lang="pl">
+        Książka o pipelinie produkcyjnym dla artystów technicznych — systemy i
+        konwencje, które trzymają produkcję w całości.
+      </p>
+      <p><a href="https://bartoszskrzypiec.github.io/pipeline-book/"><span lang="en">Open book →</span><span lang="pl">Otwórz książkę →</span></a></p>
+    </div>
+
+    <div class="card">
+      <span class="badge"><span lang="en">Live</span><span lang="pl">Na żywo</span></span>
+      <h3>Ray Tracing dla Artystów Technicznych</h3>
+      <p class="muted" lang="en">
+        A ray-tracing fundamentals book with 26 live SVG+slider diagrams and a
+        formula/tooltip reference system across 17 chapters.
+      </p>
+      <p class="muted" lang="pl">
+        Książka o podstawach ray tracingu z 26 żywymi diagramami SVG+suwak i
+        systemem dymków z formułami w 17 rozdziałach.
+      </p>
+      <p><a href="https://bartoszskrzypiec.github.io/raytracing-book/"><span lang="en">Open book →</span><span lang="pl">Otwórz książkę →</span></a></p>
+    </div>
+  </div>
+
+  <h2><span lang="en">What's in the toolkit</span><span lang="pl">Co jest w silniku</span></h2>
+  <ul class="toolkit-list">
+    <li>
+      <p><code>viz.js</code></p>
+      <p class="muted" lang="en">WebGL2 shaderball and Canvas2D plotting — real BRDF, Fresnel and thin-film maths rendered live in the browser. Source: PxrSurface Guide.</p>
+      <p class="muted" lang="pl">Kula WebGL2 i wykresy Canvas2D — prawdziwa matematyka BRDF, Fresnela i cienkiej warstwy renderowana na żywo w przeglądarce. Źródło: PxrSurface Guide.</p>
+    </li>
+    <li>
+      <p><code>i18n.js</code></p>
+      <p class="muted" lang="en">The bilingual EN/PL toggle used on this very page — config-driven via <code>data-i18n-storage</code>/<code>data-i18n-default</code>, no book-specific edits needed.</p>
+      <p class="muted" lang="pl">Dwujęzyczny przełącznik EN/PL, użyty na tej właśnie stronie — konfigurowany przez <code>data-i18n-storage</code>/<code>data-i18n-default</code>, bez potrzeby edycji pod konkretną książkę.</p>
+    </li>
+    <li>
+      <p><code>interactive.js</code></p>
+      <p class="muted" lang="en">Formula modals and symbol tooltips, proven at scale in Ray Tracing dla Artystów Technicznych (272 live tooltips).</p>
+      <p class="muted" lang="pl">Modale z formułami i dymki symboli, sprawdzone na dużą skalę w książce o ray tracingu (272 żywe dymki).</p>
+    </li>
+    <li>
+      <p><span lang="en">SVG+slider diagram pattern</span><span lang="pl">Wzorzec diagramów SVG+suwak</span></p>
+      <p class="muted" lang="en">A documented recipe (not a shared function) for a slider driving a hand-authored SVG diagram, proven in 26 instances in the ray-tracing book. See <code>patterns/svg-slider-widget.md</code>.</p>
+      <p class="muted" lang="pl">Udokumentowany przepis (nie funkcja współdzielona) na suwak sterujący ręcznie przygotowanym diagramem SVG, sprawdzony w 26 przykładach w książce o ray tracingu. Zobacz <code>patterns/svg-slider-widget.md</code>.</p>
+    </li>
+  </ul>
+  <p lang="en">Full adoption steps, the CSS token contract and a verification checklist live in <a href="docs/INTEGRATION.md">docs/INTEGRATION.md</a>.</p>
+  <p lang="pl">Pełne kroki wdrożenia, kontrakt tokenów CSS i checklista weryfikacji znajdują się w <a href="docs/INTEGRATION.md">docs/INTEGRATION.md</a>.</p>
+</main>
+
+<footer>
+  <p lang="en">Each book copies what it needs from <code>assets/</code> — there's no live cross-repo dependency, consistent with the "no build system" rule every book already follows.</p>
+  <p lang="pl">Każda książka kopiuje to, czego potrzebuje z <code>assets/</code> — nie ma żywej zależności między repozytoriami, zgodnie z zasadą "brak systemu budowania", której już trzyma się każda z książek.</p>
+  <p class="muted"><span lang="en">Last updated: 28 August 2026.</span><span lang="pl">Ostatnia aktualizacja: 28 sierpnia 2026.</span></p>
+</footer>
+
+<script type="module" src="assets/js/i18n.js"></script>
+</body>
+</html>
