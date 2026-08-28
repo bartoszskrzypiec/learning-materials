@@ -18,6 +18,45 @@ relative path wouldn't resolve anyway).
 
 They compose freely on the same page. None of them require the other two.
 
+## `viz.js`'s `createShaderball()` — what it can and can't do (2026-08-28)
+
+Before reaching for `createShaderball()` in a new context, know its actual
+shape — it's a single hand-rolled analytic ray/sphere intersection in a
+fragment shader, not a general 3D renderer:
+
+- **Geometry**: exactly one primitive, a unit sphere, solved analytically
+  per pixel. There is no vertex/mesh pipeline at all (the "vertex shader"
+  is a 3-vertex fullscreen-triangle trick). Swapping in a second analytic
+  primitive that reuses the existing BRDF/lighting math (e.g. a flat plane,
+  useful for anisotropy grain-direction or fabric-drape widgets) is a
+  contained, moderate change — a new intersection branch plus a new
+  tangent-frame branch, roughly a few hours to a day of focused work. A
+  scene with *multiple simultaneous objects* (camera frustums, BVH box
+  hierarchies, Cornell-box path bounces) is **not** a small extension of
+  this module — it needs either a scene-traversal loop in the shader or
+  real rasterization with vertex buffers, i.e. a different rendering
+  architecture that would only reuse the BRDF math and control/theming
+  utilities, not `createShaderball` itself.
+- **Camera**: fixed. No orbit, zoom, or pan on the rendered object — every
+  existing widget steers the *material*, not the *view*, via sliders.
+  `onDrag()` exists but every current use wires it to a separate Canvas2D
+  plot, never to the shaderball's own camera. Adding orbit would mean a
+  real view/eye uniform and wiring `onDrag` directly to the shaderball
+  canvas — not present today.
+- **Lighting**: one soft cone/disk light (Monte Carlo sampled for a soft
+  highlight) plus a flat ambient term. The `envGain` "sky reflection" is a
+  cheap two-tone procedural gradient keyed off the surface normal — it is
+  **not** real image-based lighting; there's no `sampler2D`/cubemap uniform
+  anywhere in the shader. A book chapter whose whole point is "the same
+  material under different HDRIs" (swappable environment lighting) would
+  need genuinely new work here, not a config tweak.
+
+None of this blocks the common case — a lit sphere showing a BRDF/Fresnel
+effect live, the thing every pilot widget built so far actually needed.
+It matters once a book wants a camera/scene diagram (more natural fit for
+the SVG+slider pattern above, at least for now) or true environment
+lighting.
+
 ## Copying in
 
 Copy whichever of `assets/js/viz.js`, `assets/js/i18n.js`,
@@ -33,7 +72,13 @@ custom properties from whatever stylesheet your book already loads:
 ```
 --text        --text-muted    --border      --accent
 --viz-a       --viz-b         --viz-grid    --viz-bg
+--bg-elevated --radius
 ```
+
+(The last two, `--bg-elevated` and `--radius`, are read only by
+`widgets.css`'s `.viz`/`.ctl` rules, not by `viz.js`'s JS `theme()` — easy to
+miss if you only check the JS. Both `raytracing_book`'s and `lookdev_book`'s
+first real pilot widgets hit this gap before it was added here.)
 
 If your book's palette uses different names, alias them once — don't edit
 `viz.js` or `widgets.css` to rename what they read. Worked example, mapping
@@ -42,12 +87,14 @@ onto this contract:
 
 ```css
 :root {
-  --text-muted: var(--text-dim);
-  --accent:     var(--amber);      /* or --raster — your call */
-  --viz-a:      var(--violet);
-  --viz-b:      var(--cyan);
-  --viz-grid:   var(--border);
-  --viz-bg:     var(--bg-panel-alt);
+  --text-muted:   var(--text-dim);
+  --accent:       var(--amber);      /* or --raster — your call */
+  --bg-elevated:  var(--bg-panel);
+  --radius:       10px;
+  --viz-a:        var(--violet);
+  --viz-b:        var(--cyan);
+  --viz-grid:     var(--border);
+  --viz-bg:       var(--bg-panel-alt);
 }
 ```
 
