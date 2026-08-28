@@ -1,0 +1,366 @@
+/* Widget capability layer — shared across the book projects.
+ *
+ * This is an ADD-ON, not a full theme: it supplies the language switch and
+ * every component class assets/js/viz.js's widgets render into (.viz*,
+ * .ctl*, .seg, themed range sliders, details.math), plus a reduced-motion
+ * override. It expects the consuming page's OWN stylesheet to already
+ * define these custom properties (link this file AFTER that stylesheet):
+ *
+ *   --text          --border        --accent
+ *   --text-muted    --viz-grid      --viz-bg
+ *   --viz-a         --viz-b
+ *
+ * If your book's palette uses different names, alias them once, e.g.:
+ *
+ *   :root {
+ *     --text-muted: var(--text-dim);
+ *     --accent:     var(--amber);
+ *     --viz-a:      var(--violet);
+ *     --viz-b:      var(--cyan);
+ *     --viz-grid:   var(--border);
+ *     --viz-bg:     var(--bg-panel-alt);
+ *   }
+ *
+ * See ../../docs/INTEGRATION.md for the full contract and a worked example.
+ * Deliberately does not include any @media (prefers-color-scheme: dark)
+ * split — if your book is single-theme, define the aliases once; if it
+ * needs a light/dark split, add that override in your own stylesheet, not
+ * here, since dark-only and light+dark books both consume this file as-is.
+ */
+
+/* ---------- Language switch (EN / PL) ---------- */
+/* Both languages ship in the HTML; these two rules hide the inactive one, so
+   the right language renders before any JS runs and with JS disabled. */
+:root[data-lang="en"] [lang="pl"] { display: none; }
+:root[data-lang="pl"] [lang="en"] { display: none; }
+
+/* Only offer the switch once i18n.js has confirmed it can do something. */
+.lang-switch { display: none; }
+
+/* On bilingual pages the brand and the switch hold the top row, and the
+   (longer) link list gets a row of its own underneath. Without this the
+   switch wraps below the links and ends up bottom-left. */
+.topnav--i18n .lang-switch { order: 2; margin-left: auto; }
+.topnav--i18n .topnav__links { order: 3; flex-basis: 100%; }
+
+:root.js .lang-switch {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.lang-switch button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.lang-switch button:hover { color: var(--text); }
+
+.lang-switch button.is-active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.lang-switch button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* ---------- Interactive visualisation blocks ---------- */
+.viz {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 1.75rem 0;
+  overflow: hidden;
+}
+
+.viz__head {
+  padding: 0.85rem 1.15rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.viz__title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.viz__sub {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.viz__stage {
+  position: relative;
+  background: var(--viz-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem;
+}
+
+.viz__stage--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+@media (max-width: 620px) {
+  .viz__stage--split { grid-template-columns: 1fr; }
+}
+
+.viz canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: 6px;
+  touch-action: none;
+}
+
+.viz__controls {
+  padding: 0.9rem 1.15rem 1.1rem;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.85rem 1.5rem;
+}
+
+.viz__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  padding: 0.6rem 1.15rem;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+
+.viz__legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.viz__legend i {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 3px;
+  display: inline-block;
+  flex: none;
+}
+
+.legend-a { background: var(--viz-a); }
+.legend-b { background: var(--viz-b); }
+.legend-arnold { background: var(--arnold); }
+.legend-pxr { background: var(--pxr); }
+
+.viz__note {
+  padding: 0.7rem 1.15rem 0.9rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+
+.viz__note p { margin: 0; }
+
+.viz__fallback {
+  padding: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ---------- Controls ---------- */
+.ctl { font-size: 0.85rem; }
+
+.ctl__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.3rem;
+  color: var(--text-muted);
+}
+
+.ctl__value {
+  font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.82rem;
+  color: var(--text);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ctl input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+  display: block;
+}
+
+.ctl input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+.ctl input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+.ctl input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  margin-top: -5.5px;
+  border-radius: 999px;
+  background: var(--accent);
+  border: 2px solid var(--bg-elevated);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+}
+
+.ctl input[type="range"]::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  background: var(--accent);
+  border: 2px solid var(--bg-elevated);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+}
+
+.ctl input[type="range"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
+/* Segmented toggle */
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+.seg button {
+  appearance: none;
+  border: 0;
+  border-right: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.seg button:last-child { border-right: 0; }
+.seg button:hover { color: var(--text); }
+
+.seg button.is-active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.seg button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.ctl--seg .ctl__label { margin-bottom: 0.4rem; }
+
+/* Readout strip under a widget */
+.readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1.5rem;
+  padding: 0.6rem 1.15rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.readout b {
+  color: var(--text);
+  font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.82rem;
+}
+
+/* ---------- Optional maths ---------- */
+details.math {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  font-size: 0.93rem;
+}
+
+details.math > summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+details.math > summary::-webkit-details-marker { display: none; }
+
+details.math > summary::before {
+  content: "▸";
+  font-size: 0.75rem;
+  transition: transform 0.15s ease;
+}
+
+details.math[open] > summary::before { transform: rotate(90deg); }
+details.math[open] > summary { margin-bottom: 0.5rem; }
+details.math > summary:hover { color: var(--accent); }
+
+.formula {
+  background: var(--code-bg);
+  border-radius: 6px;
+  padding: 0.7rem 0.9rem;
+  margin: 0.75rem 0;
+  overflow-x: auto;
+  font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.84rem;
+  line-height: 1.7;
+  white-space: pre;
+}
+
+.formula-where {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0.4rem 0 0;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  details.math > summary::before { transition: none; }
+}
