@@ -1,0 +1,9 @@
+three.js r180 (npm: three@0.180.0)
+Pobrane: npm pack three@0.180.0 -> package/build/
+Skopiowane pliki:
+  build/three.module.min.js -> assets/vendor/three.module.js
+  build/three.core.min.js   -> assets/vendor/three.core.min.js
+Licencja: MIT, Copyright 2010-2025 Three.js Authors (naglowek zostaje w pliku)
+
+Odswiezenie: powtorzyc npm pack z nowa wersja i podmienic oba pliki.
+Nie dodawac package.json - w tym repo nie ma i nie bedzie kroku budowania.

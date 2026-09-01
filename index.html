@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-title-en="Learning Materials — shared toolkit for the rendering books" data-title-pl="Learning Materials — wspólny silnik dla książek o renderowaniu">Learning Materials</title>
-<meta name="description" content="Shared graphics/i18n toolkit and a starting point for four rendering books: PxrSurface Guide, Lookdev, Pipeline and Ray Tracing dla Artystów Technicznych.">
+<title data-title-en="Learning Materials — the shared toolkit behind the books" data-title-pl="Learning Materials — wspólny silnik książek">Learning Materials</title>
+<meta name="description" content="Shared graphics/i18n toolkit and a starting point for five books: PxrSurface Guide, Lookdev, Pipeline and Ray Tracing dla Artystów Technicznych, and Atmosfera i chmury dla ciekawych.">
 <script>
 (function () {
   var d = document.documentElement, l = null;
@@ -113,19 +113,20 @@ footer a { color: var(--text-muted); }
 
 <header class="hero">
   <p class="section-kicker"><span lang="en">Shared toolkit, not a book</span><span lang="pl">Wspólny silnik, nie książka</span></p>
-  <h1><span lang="en">One graphics and translation engine, four rendering books.</span><span lang="pl">Jeden silnik grafiki i tłumaczeń, cztery książki o renderowaniu.</span></h1>
+  <h1><span lang="en">One graphics and translation engine, five books.</span><span lang="pl">Jeden silnik grafiki i tłumaczeń, pięć książek.</span></h1>
   <p class="lead" lang="en">
-    This repo holds the WebGL/Canvas widget engine, the bilingual EN/PL toggle,
-    the formula-tooltip system and the SVG+slider diagram pattern shared by the
-    four books below. It isn't a book itself — it's the starting point for
-    getting to any of them, and for the code they're all built on.
+    This repo holds the WebGL/Canvas widget engine, the three.js engine for
+    turnable 3D scenes, the bilingual EN/PL toggle, the formula-tooltip system
+    and the SVG+slider diagram pattern shared by the five books below. It isn't
+    a book itself — it's the starting point for getting to any of them, and for
+    the code they're all built on.
   </p>
   <p class="lead" lang="pl">
-    To repozytorium zawiera silnik widgetów WebGL/Canvas, dwujęzyczny przełącznik
-    EN/PL, system dymków z formułami i wzorzec diagramów SVG+suwak, wspólne dla
-    czterech książek poniżej. Samo w sobie nie jest książką — to punkt wyjścia,
-    z którego można przejść do dowolnej z nich, oraz do kodu, na którym wszystkie
-    się opierają.
+    To repozytorium zawiera silnik widgetów WebGL/Canvas, silnik three.js do scen
+    3D, które da się obrócić w dłoni, dwujęzyczny przełącznik EN/PL, system dymków
+    z formułami i wzorzec diagramów SVG+suwak, wspólne dla pięciu książek poniżej.
+    Samo w sobie nie jest książką — to punkt wyjścia, z którego można przejść do
+    dowolnej z nich, oraz do kodu, na którym wszystkie się opierają.
   </p>
 </header>
 
@@ -189,6 +190,26 @@ footer a { color: var(--text-muted); }
       </p>
       <p><a href="https://bartoszskrzypiec.github.io/raytracing-book/"><span lang="en">Open book →</span><span lang="pl">Otwórz książkę →</span></a></p>
     </div>
+
+    <div class="card">
+      <span class="badge"><span lang="en">Live</span><span lang="pl">Na żywo</span></span>
+      <h3>Atmosfera i chmury dla ciekawych</h3>
+      <p class="muted" lang="en">
+        Why the sky changes colour, how clouds form and why they differ — 24
+        chapters, 26 appendices and three field pages for a phone outdoors.
+        Not a formula in the main text, and eleven live three.js widgets:
+        a computed sky, a raymarched cloud, a scattering lobe you can turn.
+        Polish only, and the one book here that assumes no DCC background.
+      </p>
+      <p class="muted" lang="pl">
+        Dlaczego niebo zmienia kolor, skąd biorą się chmury i czym się różnią —
+        24 rozdziały, 26 dodatków i trzy strony terenowe na telefon. Ani jednego
+        wzoru w tekście głównym, za to jedenaście żywych widgetów three.js:
+        policzone niebo, raymarchowana chmura, lob rozpraszania do obrócenia.
+        Tylko po polsku i jako jedyna nie zakłada znajomości DCC.
+      </p>
+      <p><a href="https://bartoszskrzypiec.github.io/atmosfera_chmury_book/"><span lang="en">Open book →</span><span lang="pl">Otwórz książkę →</span></a></p>
+    </div>
   </div>
 
   <h2><span lang="en">What's in the toolkit</span><span lang="pl">Co jest w silniku</span></h2>
@@ -197,6 +218,11 @@ footer a { color: var(--text-muted); }
       <p><code>viz.js</code></p>
       <p class="muted" lang="en">WebGL2 shaderball and Canvas2D plotting — real BRDF, Fresnel and thin-film maths rendered live in the browser. Source: PxrSurface Guide.</p>
       <p class="muted" lang="pl">Kula WebGL2 i wykresy Canvas2D — prawdziwa matematyka BRDF, Fresnela i cienkiej warstwy renderowana na żywo w przeglądarce. Źródło: PxrSurface Guide.</p>
+    </li>
+    <li>
+      <p><code>sky3d.js</code></p>
+      <p class="muted" lang="en">three.js scenes the reader can turn: an orbit camera, screen-space labels pinned to 3D points, and a declarative <code>createDiagram3D()</code> that builds a whole scene from a list of parts. Where <code>viz.js</code> renders one analytic sphere with a fixed camera, this renders a scene. Source: Atmosfera i chmury (11 widgets). Carries the toolkit's one dependency — three.js, vendored, never from a CDN.</p>
+      <p class="muted" lang="pl">Sceny three.js, które czytelnik może obrócić: kamera orbitalna, etykiety przypięte do punktów 3D i deklaratywne <code>createDiagram3D()</code>, budujące całą scenę z listy części. Tam gdzie <code>viz.js</code> renderuje jedną analityczną kulę przy nieruchomej kamerze, ten renderuje scenę. Źródło: Atmosfera i chmury (11 widgetów). Niesie jedyną zależność silnika — three.js, wgrany do repo, nigdy z CDN-a.</p>
     </li>
     <li>
       <p><code>i18n.js</code></p>
@@ -221,7 +247,7 @@ footer a { color: var(--text-muted); }
 <footer>
   <p lang="en">Each book copies what it needs from <code>assets/</code> — there's no live cross-repo dependency, consistent with the "no build system" rule every book already follows.</p>
   <p lang="pl">Każda książka kopiuje to, czego potrzebuje z <code>assets/</code> — nie ma żywej zależności między repozytoriami, zgodnie z zasadą "brak systemu budowania", której już trzyma się każda z książek.</p>
-  <p class="muted"><span lang="en">Last updated: 28 August 2026.</span><span lang="pl">Ostatnia aktualizacja: 28 sierpnia 2026.</span></p>
+  <p class="muted"><span lang="en">Last updated: 1 September 2026.</span><span lang="pl">Ostatnia aktualizacja: 1 września 2026.</span></p>
 </footer>
 
 <script type="module" src="assets/js/i18n.js"></script>
