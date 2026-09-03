@@ -3,6 +3,27 @@
 Plain dated log, no version numbers — consuming books check this before
 re-copying a file to see what changed since their last copy.
 
+## 2026-09-02 — sixth book listed, `thinFilmRGB()` scope documented
+
+- **`index.html`, `README.md`, `CLAUDE.md`** — added the sixth book,
+  *Optyka dla Artystów Technicznych* (`optyka-book`,
+  https://bartoszskrzypiec.github.io/optyka-book/), and updated the
+  "five books" counts everywhere they appeared. Its card is badged
+  *in progress* because the book is live but still being written.
+  EN/PL span balance unchanged in kind (33 en / 35 pl — the two-span gap
+  is the `<html lang="pl">` root plus the language switch, as before).
+- **`docs/INTEGRATION.md`** — new dated section documenting which thin
+  film `viz.js`'s `thinFilmRGB()` actually models. It assumes the *same
+  medium on both sides* (soap bubble, oil slick) and carries a `+ π` phase
+  term to match. An anti-reflective coating on glass has the index rising
+  at both interfaces, so those two shifts cancel and the condition
+  inverts — calling the function there returns colours exactly opposite to
+  the real ones. **No code changed**: the function is correct for its
+  original use in `pxrsurface-guide`. Found while writing `optyka-book`
+  R.24, which needed the coating case and now carries its own dozen-line
+  implementation.
+
+
 ## 2026-08-28 — initial promotion
 
 - **`assets/js/viz.js`** — promoted from `pxrsurface-guide`

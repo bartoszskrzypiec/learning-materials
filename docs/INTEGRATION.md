@@ -80,6 +80,39 @@ It matters once a book wants a camera/scene diagram (more natural fit for
 the SVG+slider pattern above, at least for now) or true environment
 lighting.
 
+## `viz.js`'s `thinFilmRGB()` — which thin film it models (2026-09-02)
+
+`thinFilmRGB(cosT, thicknessNm, filmIor)` returns the reflected RGB of a
+thin film, and it models **one specific stack: film with the *same* medium
+on both sides** — a soap bubble, an oil slick on water, an oxide layer read
+in air. It is not the right function for an **anti-reflective coating on
+glass**, and using it there gives colours that are exactly inverted.
+
+The difference is one phase term. A reflection at an interface where the
+refractive index *rises* picks up a half-wave phase shift. In the
+soap-bubble case only the top interface does (air→film, then film→air), so
+one net half-wave survives — which is the `+ Math.PI` in the function's
+cosine. In a coating on glass the index rises at **both** interfaces
+(air 1.00 → MgF₂ 1.38 → glass 1.52), the two shifts cancel, and the
+condition flips: a quarter-wave layer gives a reflection *minimum* rather
+than a maximum.
+
+Practically:
+
+- **Iridescence on a surface** (bubble, oil, tarnish, insect wing, some
+  car paints) — `thinFilmRGB()` is correct as written.
+- **Lens coating, residual flare colour, why a ghost is green** — do not
+  call it. The reflectance is
+  `R = r₁² + r₂² + 2r₁r₂·cos(2π·n₁·d·2/λ)` with
+  `r₁ = (n₀−n₁)/(n₀+n₁)`, `r₂ = (n₁−n₂)/(n₁+n₂)`, both negative for a
+  coating on glass. `optyka-book`'s R.24 carries a worked implementation;
+  it is a dozen lines and needs no WebGL.
+
+Found while writing `optyka-book` R.24, which needed the coating case and
+would have shipped inverted colours had it reused the function unchanged.
+No behaviour change was made to `viz.js` — the existing function is correct
+for the case it was written for, in `pxrsurface-guide`.
+
 ## `sky3d.js` — the 3D widget engine (2026-09-01)
 
 Promoted from `atmosfera_chmury_book`, where it drives eleven widgets. Same
