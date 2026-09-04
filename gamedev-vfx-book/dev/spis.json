@@ -1,0 +1,511 @@
+{
+  "ksiazka": {
+    "tytul": "Gamedev w VFX",
+    "podtytul": "Workflow i patenty z produkcji gier przeniesione do pipeline'u efektów",
+    "brand_prefix": "Gamedev",
+    "brand_suffix": "w VFX"
+  },
+  "czesci": [
+    {
+      "label": "Część I · Dwa światy, jeden warsztat (R.1–3)",
+      "zakres": [
+        1,
+        3
+      ]
+    },
+    {
+      "label": "Część II · Autoring assetów (R.4–9)",
+      "zakres": [
+        4,
+        9
+      ]
+    },
+    {
+      "label": "Część III · Geometria i skala (R.10–13)",
+      "zakres": [
+        10,
+        13
+      ]
+    },
+    {
+      "label": "Część IV · Tekstury i pamięć (R.14–16)",
+      "zakres": [
+        14,
+        16
+      ]
+    },
+    {
+      "label": "Część V · Real-time lookdev i rendering (R.17–22)",
+      "zakres": [
+        17,
+        22
+      ]
+    },
+    {
+      "label": "Część VI · Pipeline i dane (R.23–26)",
+      "zakres": [
+        23,
+        26
+      ]
+    },
+    {
+      "label": "Część VII · Domknięcie (R.27–28)",
+      "zakres": [
+        27,
+        28
+      ]
+    }
+  ],
+  "rozdzialy": [
+    {
+      "nr": 1,
+      "slug": "dwa-zegary",
+      "tytul": "Dwa zegary: 16 milisekund kontra noc renderu",
+      "eyebrow": "Dwa światy",
+      "hook": "Gamedev i VFX rozwiązują ten sam problem obrazu przy dwóch skrajnie różnych budżetach czasu — i ta jedna różnica tłumaczy niemal wszystkie pozostałe.",
+      "readout": [
+        "BUDŻET KLATKI · 16,7 ms",
+        "BUDŻET KLATKI · 4 h",
+        "RÓŻNICA · ×860 000"
+      ]
+    },
+    {
+      "nr": 2,
+      "slug": "filtr-przenoszenia",
+      "tytul": "Filtr: co się przenosi, a co tylko wygląda, jakby się przenosiło",
+      "eyebrow": "Dwa światy",
+      "hook": "Zanim przeciągniesz cokolwiek z gamedevu do VFX, warto mieć trzy pytania, które odsiewają patenty realnie użyteczne od kultu cargo.",
+      "readout": [
+        "PATENT · kandydat",
+        "TEST · 3 pytania",
+        "WYNIK · przenieś / porzuć"
+      ]
+    },
+    {
+      "nr": 3,
+      "slug": "wspolny-fundament",
+      "tytul": "Wspólny fundament: PBR, USD i te same DCC",
+      "eyebrow": "Dwa światy",
+      "hook": "Obie branże od dawna stoją na tych samych filarach — i właśnie dlatego przenoszenie workflow jest w ogóle wykonalne, a nie tylko efektowne w prezentacji.",
+      "readout": [
+        "MODEL · PBR",
+        "WYMIANA · USD",
+        "DCC · wspólne"
+      ]
+    },
+    {
+      "nr": 4,
+      "slug": "budzet-jako-narzedzie",
+      "tytul": "Budżet jako narzędzie projektowe",
+      "eyebrow": "Assety",
+      "hook": "W grze budżet tekstur i trójkątów jest twardą liczbą, którą widać codziennie. W VFX też istnieje — tylko nikt go nie mierzy, dopóki nie wybuchnie farma.",
+      "readout": [
+        "VRAM · 8 GB",
+        "ASSET · 240 MB",
+        "ZAJĘTE · 71%"
+      ]
+    },
+    {
+      "nr": 5,
+      "slug": "trim-sheety",
+      "tytul": "Trim sheety: jedna tekstura, całe środowisko",
+      "eyebrow": "Assety",
+      "hook": "Najbardziej opłacalny patent, jaki gamedev ma do zaoferowania środowiskom VFX — jeden arkusz krawędzi i profili, z którego da się zbudować pół setu.",
+      "readout": [
+        "TRIM · 2048×2048",
+        "POKRYCIE · 46 elementów",
+        "UNIKALNYCH MAP · 1"
+      ]
+    },
+    {
+      "nr": 6,
+      "slug": "atlasy-udim-texel-density",
+      "tytul": "Atlasy, UDIM-y i texel density",
+      "eyebrow": "Assety",
+      "hook": "Ile pikseli na centymetr ma Twój asset? W gamedevie to pytanie z odpowiedzią w liczbie, w VFX zwykle wzruszenie ramion — a to dokładnie ta sama wielkość.",
+      "readout": [
+        "TEXEL · 10,24 px/cm",
+        "UDIM · 1001–1012",
+        "ATLAS · 1"
+      ]
+    },
+    {
+      "nr": 7,
+      "slug": "modularnosc-kitbashing",
+      "tytul": "Modularność i kit-bashing: asset jako klocek",
+      "eyebrow": "Assety",
+      "hook": "Set zbudowany z pięćdziesięciu powtarzalnych części zamiast pięciuset unikatów — i dlaczego wcale nie musi wyglądać na powtarzalny.",
+      "readout": [
+        "MODUŁÓW · 52",
+        "INSTANCJI · 3 180",
+        "SIATKA · 100 cm"
+      ]
+    },
+    {
+      "nr": 8,
+      "slug": "tileable-dekale-blendy",
+      "tytul": "Tileable, dekale i blendy: autoring warstwowy",
+      "eyebrow": "Assety",
+      "hook": "Zamiast jednej wielkiej unikalnej mapy — baza kafelkowa, dekale na to, co wyróżnia, i blend tam, gdzie jedno przechodzi w drugie.",
+      "readout": [
+        "BAZA · tileable",
+        "DEKALE · 14",
+        "BLEND · vertex color"
+      ]
+    },
+    {
+      "nr": 9,
+      "slug": "higiena-assetu",
+      "tytul": "Higiena assetu: nazwy, pivoty, skala, UV",
+      "eyebrow": "Assety",
+      "hook": "Nudna warstwa, której gamedev pilnuje obsesyjnie, bo inaczej gra się nie zbuduje — a która w VFX kosztuje dokładnie tyle samo, tylko później.",
+      "readout": [
+        "PIVOT · 0,0,0",
+        "SKALA · 1,0",
+        "UV · bez nakładek"
+      ]
+    },
+    {
+      "nr": 10,
+      "slug": "lod-y",
+      "tytul": "LOD-y: dyscyplina geometrii dostatecznie dobrej",
+      "eyebrow": "Geometria",
+      "hook": "Proxy i standin z VFX to LOD w przebraniu. Różnica polega na tym, że w grze ktoś policzył, kiedy dokładnie przełączyć.",
+      "readout": [
+        "LOD0 · 84 k tris",
+        "LOD3 · 1,2 k tris",
+        "PRÓG · 12% ekranu"
+      ]
+    },
+    {
+      "nr": 11,
+      "slug": "imposters",
+      "tytul": "Imposters i billboardy: obraz zamiast geometrii",
+      "eyebrow": "Geometria",
+      "hook": "Kiedy przestaje opłacać się mieć obiekt, a zaczyna opłacać jego zdjęcie — pytanie stare jak matte painting, tylko z automatem do generowania.",
+      "readout": [
+        "ATLAS · 16×16 ujęć",
+        "KOSZT · 2 tris",
+        "DYSTANS · > 60 m"
+      ]
+    },
+    {
+      "nr": 12,
+      "slug": "instancing-scattering",
+      "tytul": "Instancing i scattering: jedna geometria, milion kopii",
+      "eyebrow": "Geometria",
+      "hook": "Las, tłum, gruz. W obu branżach ta sama zasada: nie kopiuj danych, kopiuj wskaźnik i macierz.",
+      "readout": [
+        "ŹRÓDŁO · 1 mesh",
+        "INSTANCJI · 1 240 000",
+        "PAMIĘĆ · ×1"
+      ]
+    },
+    {
+      "nr": 13,
+      "slug": "nanite-kontra-subdiv",
+      "tytul": "Nanite kontra subdivision i displacement",
+      "eyebrow": "Geometria",
+      "hook": "Dwie odpowiedzi na to samo pytanie: skąd wziąć szczegół, którego nie ma w siatce bazowej — jedna zbudowana pod klatkę, druga pod renderfarmę.",
+      "readout": [
+        "ŹRÓDŁO · 12 M tris",
+        "KLASTRY · 128 tris",
+        "SUBDIV · adaptive"
+      ]
+    },
+    {
+      "nr": 14,
+      "slug": "mipmapy-streaming-vt",
+      "tytul": "Mipmapy, streaming i tekstury wirtualne",
+      "eyebrow": "Tekstury",
+      "hook": "Gra nigdy nie ma w pamięci wszystkich tekstur i nikt tego nie zauważa. Render w VFX zwykle próbuje mieć wszystkie — i czasem właśnie na tym pada.",
+      "readout": [
+        "POZIOMY MIP · 12",
+        "REZYDENTNE · 8%",
+        "KAFELEK · 128 px"
+      ]
+    },
+    {
+      "nr": 15,
+      "slug": "kompresja-tekstur",
+      "tytul": "Kompresja: BC, ASTC, EXR i .tx",
+      "eyebrow": "Tekstury",
+      "hook": "Ta sama tekstura potrafi zajmować 4 MB albo 64 MB w zależności od jednego ustawienia — i tylko jedna z tych liczb jest przypadkowa.",
+      "readout": [
+        "ŹRÓDŁO · 64 MB",
+        "BC7 · 5,6 MB",
+        "STRATA · widoczna?"
+      ]
+    },
+    {
+      "nr": 16,
+      "slug": "baking",
+      "tytul": "Baking: normal, AO, curvature, position",
+      "eyebrow": "Tekstury",
+      "hook": "Piekarnia gamedevu przeniesiona do lookdevu — mapy, które zamieniają policzalny, ale drogi detal na tani odczyt z tekstury.",
+      "readout": [
+        "HIGH · 12 M tris",
+        "LOW · 18 k tris",
+        "CAGE · 2,4 cm"
+      ]
+    },
+    {
+      "nr": 17,
+      "slug": "petla-iteracji",
+      "tytul": "Pętla iteracji: sekunda kontra noc",
+      "eyebrow": "Rendering",
+      "hook": "Największy zysk z real-time'u w VFX nie leży w finalnej klatce, tylko w liczbie decyzji, które da się podjąć przed lunchem.",
+      "readout": [
+        "ITERACJA · 0,8 s",
+        "ITERACJA · 40 min",
+        "DECYZJI/DZIEŃ · ?"
+      ]
+    },
+    {
+      "nr": 18,
+      "slug": "shader-graph-osl-materialx",
+      "tytul": "Shader graph, OSL i MaterialX",
+      "eyebrow": "Rendering",
+      "hook": "Dwa sposoby myślenia o materiale — graf, który musi skompilować się do GPU, i graf, który może pozwolić sobie na pętlę — plus standard, który próbuje je pogodzić.",
+      "readout": [
+        "GRAF · 64 węzły",
+        "KOMPILACJA · 1,2 s",
+        "WYMIANA · MaterialX"
+      ]
+    },
+    {
+      "nr": 19,
+      "slug": "lumen-rt-pathtracer",
+      "tytul": "Lumen, ray tracing i path tracer: kiedy przybliżenie wystarcza",
+      "eyebrow": "Rendering",
+      "hook": "Real-time GI to seria świadomych kłamstw o świetle. Warto wiedzieć których, żeby rozpoznać moment, w którym kłamstwo widać na ekranie.",
+      "readout": [
+        "ODBIĆ · 1 (+ approx)",
+        "ODBIĆ · 8",
+        "RÓŻNICA · GI pośrednie"
+      ]
+    },
+    {
+      "nr": 20,
+      "slug": "denoising-upscaling-motion-vectors",
+      "tytul": "Denoising, upscaling i motion vectors",
+      "eyebrow": "Rendering",
+      "hook": "Ta sama matematyka odszumia render z path tracera i dorabia klatki w grze — z jedną różnicą, która decyduje o tym, czy wolno jej użyć w shocie.",
+      "readout": [
+        "SPP · 64",
+        "AOV · normal, albedo, mv",
+        "TEMPORAL · tak/nie"
+      ]
+    },
+    {
+      "nr": 21,
+      "slug": "look-parity",
+      "tytul": "Look parity: dopiąć preview do finalnego renderu",
+      "eyebrow": "Rendering",
+      "hook": "Preview, któremu nie można zaufać, jest gorszy niż jego brak — jak zbudować most między silnikiem a renderfarmą, który nie kłamie o kolorze.",
+      "readout": [
+        "OCIO · ACES 1.3",
+        "DELTA E · 1,8",
+        "TOLERANCJA · 2,0"
+      ]
+    },
+    {
+      "nr": 22,
+      "slug": "wirtualna-produkcja",
+      "tytul": "Wirtualna produkcja: LED, ICVFX i previz w silniku",
+      "eyebrow": "Rendering",
+      "hook": "Miejsce, w którym te dwie branże już się zderzyły na planie — i gdzie asset z gry musi wytrzymać spojrzenie kamery filmowej.",
+      "readout": [
+        "ŚCIANA · 24 × 6 m",
+        "GENLOCK · 24 fps",
+        "FRUSTUM · kamera A"
+      ]
+    },
+    {
+      "nr": 23,
+      "slug": "perforce-ddc-hot-reload",
+      "tytul": "Perforce, DDC i hot reload",
+      "eyebrow": "Pipeline",
+      "hook": "Gra buduje się kilkanaście razy dziennie, więc cache i przeładowanie w locie nie są luksusem, tylko warunkiem pracy. VFX dopiero się tego uczy.",
+      "readout": [
+        "BUILD · #4182",
+        "DDC · hit 94%",
+        "RELOAD · 1,4 s"
+      ]
+    },
+    {
+      "nr": 24,
+      "slug": "proceduralnosc-pdg",
+      "tytul": "Proceduralność: Houdini, PDG i generowanie zamiast modelowania",
+      "eyebrow": "Pipeline",
+      "hook": "Jedyny obszar, w którym ruch idzie w drugą stronę — to VFX nauczyło gamedev, że asset może być przepisem, nie plikiem.",
+      "readout": [
+        "HDA · rock_generator",
+        "WARIANTÓW · 240",
+        "GRAF · 18 węzłów"
+      ]
+    },
+    {
+      "nr": 25,
+      "slug": "walidacja-ci",
+      "tytul": "Walidacja automatyczna: CI dla assetów",
+      "eyebrow": "Pipeline",
+      "hook": "Skoro maszyna potrafi sprawdzić, czy kod się kompiluje, potrafi też sprawdzić, czy asset ma pivot w zerze i nienachodzące UV.",
+      "readout": [
+        "TESTÓW · 24",
+        "PASS · 22",
+        "BLOKUJE PUBLISH · 2"
+      ]
+    },
+    {
+      "nr": 26,
+      "slug": "biblioteki-asset-store",
+      "tytul": "Biblioteki i asset store'y: kupione, skanowane, wygenerowane",
+      "eyebrow": "Pipeline",
+      "hook": "Gamedev dawno przestał traktować gotowy asset jak oszustwo. VFX robi to samo od lat, tylko rzadziej się do tego przyznaje.",
+      "readout": [
+        "ŹRÓDŁO · skan",
+        "LICENCJA · sprawdzona",
+        "OBRÓBKA · retopo + trim"
+      ]
+    },
+    {
+      "nr": 27,
+      "slug": "czego-nie-przenosic",
+      "tytul": "Czego nie przenosić z gamedevu",
+      "eyebrow": "Domknięcie",
+      "hook": "Lista rzeczy, które w grze są cnotą, a w shocie kosztownym błędem — bo książka o przenoszeniu patentów bez tego rozdziału byłaby nieuczciwa.",
+      "readout": [
+        "KANDYDATÓW · 9",
+        "ODRZUCONYCH · 9",
+        "POWÓD · patrz niżej"
+      ]
+    },
+    {
+      "nr": 28,
+      "slug": "epilog-jeden-asset",
+      "tytul": "Epilog: jeden asset od skanu do klatki",
+      "eyebrow": "Domknięcie",
+      "hook": "Prześledźmy jeden rekwizyt przez wszystkie patenty z tej książki — od skanu, przez trim sheet i LOD-y, po finalną klatkę z path tracera.",
+      "readout": [
+        "ASSET · prop_crate_A",
+        "ETAPÓW · 11",
+        "KLATKA · final"
+      ]
+    }
+  ],
+  "dodatki": [
+    {
+      "litera": "a",
+      "tytul": "Texel density w liczbach",
+      "ext": 6,
+      "eyebrow": "Głębiej: Assety",
+      "hook": "Rozdział 6 podał zasadę. Tu są liczby: jak policzyć px/cm dla dowolnego assetu, jakie wartości stosuje się realnie i co się dzieje, gdy dwa sąsiadujące obiekty mają różne.",
+      "slug": "texel-density-w-liczbach"
+    },
+    {
+      "litera": "b",
+      "tytul": "Anatomia trim sheetu krok po kroku",
+      "ext": 5,
+      "eyebrow": "Głębiej: Assety",
+      "hook": "Budowa jednego arkusza od pustego płótna: podział pasów, marginesy, co daje się powtarzać w poziomie, a co nie, i jak zaplanować go pod UV, zanim powstanie pierwszy piksel.",
+      "slug": "anatomia-trim-sheetu"
+    },
+    {
+      "litera": "c",
+      "tytul": "UDIM kontra atlas: kiedy które",
+      "ext": 6,
+      "eyebrow": "Głębiej: Assety",
+      "hook": "Dwa sposoby na to samo — rozłożenie powierzchni na wiele tekstur. Jeden zoptymalizowany pod pamięć GPU, drugi pod rozdzielczość hero assetu z bliska.",
+      "slug": "udim-kontra-atlas"
+    },
+    {
+      "litera": "d",
+      "tytul": "Budżety pamięci: skąd biorą się liczby",
+      "ext": 4,
+      "eyebrow": "Głębiej: Assety",
+      "hook": "Dlaczego akurat 8 GB, akurat 4096 px i akurat 150 tysięcy trójkątów — rozłożenie realnego budżetu na czynniki, które da się policzyć zamiast zgadywać.",
+      "slug": "budzety-pamieci"
+    },
+    {
+      "litera": "e",
+      "tytul": "Progi LOD: jak wybiera się moment przełączenia",
+      "ext": 10,
+      "eyebrow": "Głębiej: Geometria",
+      "hook": "Screen size, histereza i popping — mechanika decyzji, która w VFX zwykle sprowadza się do „przełącz ręcznie, jak supervisor zauważy”.",
+      "slug": "progi-lod"
+    },
+    {
+      "litera": "f",
+      "tytul": "Imposters oktahedralne od środka",
+      "ext": 11,
+      "eyebrow": "Głębiej: Geometria",
+      "hook": "Jak zapakować widok obiektu ze wszystkich stron w jeden atlas i odtworzyć go z dowolnego kąta — z interpolacją, która nie miga przy ruchu kamery.",
+      "slug": "imposters-oktahedralne"
+    },
+    {
+      "litera": "g",
+      "tytul": "Nanite od środka: klastry, hierarchia, ograniczenia",
+      "ext": 13,
+      "eyebrow": "Głębiej: Geometria",
+      "hook": "Rozdział 13 potraktował Nanite jako czarną skrzynkę. Tu otwieramy ją: klastry, hierarchiczny wybór poziomu i lista rzeczy, których ta technika nie umie.",
+      "slug": "nanite-od-srodka"
+    },
+    {
+      "litera": "h",
+      "tytul": "Formaty i kompresja tekstur: BC1–BC7, ASTC, DWAA",
+      "ext": 15,
+      "eyebrow": "Głębiej: Tekstury",
+      "hook": "Co dokładnie robi każdy z tych formatów z Twoimi pikselami, gdzie artefakty pojawiają się najpierw i dlaczego mapa normalnych ma własne reguły.",
+      "slug": "kompresja-formaty"
+    },
+    {
+      "litera": "i",
+      "tytul": "Tekstury wirtualne i streaming od środka",
+      "ext": 14,
+      "eyebrow": "Głębiej: Tekstury",
+      "hook": "Feedback buffer, kafelki, opóźnienie jednej klatki — mechanizm, dzięki któremu gra pokazuje teksturę, której w momencie rysowania jeszcze nie miała w pamięci.",
+      "slug": "wirtualne-tekstury"
+    },
+    {
+      "litera": "j",
+      "tytul": "Baking: cage, ray distance i katalog artefaktów",
+      "ext": 16,
+      "eyebrow": "Głębiej: Tekstury",
+      "hook": "Skąd biorą się te wszystkie dziwne smugi na wypalonej mapie normalnych — i który parametr odpowiada za każdą z nich.",
+      "slug": "baking-artefakty"
+    },
+    {
+      "litera": "k",
+      "tytul": "TAA, DLSS, FSR i motion vectors od środka",
+      "ext": 20,
+      "eyebrow": "Głębiej: Rendering",
+      "hook": "Akumulacja w czasie, reprojekcja i ghosting — jak dokładnie działa rekonstrukcja temporalna i dlaczego bez wektorów ruchu nie ma się czego akumulować.",
+      "slug": "taa-dlss-motion-vectors"
+    },
+    {
+      "litera": "l",
+      "tytul": "MaterialX i OpenPBR jako wspólny język materiału",
+      "ext": 18,
+      "eyebrow": "Głębiej: Rendering",
+      "hook": "Próba, żeby ten sam materiał znaczył to samo w silniku gry i w path tracerze — co ten standard rzeczywiście gwarantuje, a czego nie.",
+      "slug": "materialx-openpbr"
+    },
+    {
+      "litera": "m",
+      "tytul": "PDG/TOPs: graf zadań zamiast skryptu",
+      "ext": 24,
+      "eyebrow": "Głębiej: Pipeline",
+      "hook": "Generowanie dwustu wariantów assetu bez pisania pętli — i bez ponownego liczenia stu dziewięćdziesięciu, które się nie zmieniły.",
+      "slug": "pdg-tops"
+    },
+    {
+      "litera": "n",
+      "tytul": "Walidator assetu: lista kontrolna, którą da się zautomatyzować",
+      "ext": 25,
+      "eyebrow": "Głębiej: Pipeline",
+      "hook": "Konkretne testy, gotowe do wpięcia w publish — od skali i pivota po nakładające się UV i nieużywane materiały, z uzasadnieniem każdego z nich.",
+      "slug": "walidator-assetu"
+    }
+  ]
+}

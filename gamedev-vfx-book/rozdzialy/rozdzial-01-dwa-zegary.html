@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rozdział 1 — Dwa zegary: 16 milisekund kontra noc renderu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="topnav__brand" href="../index.html">Gamedev <span>w VFX</span></a>
+  <div class="topnav__links">
+    <a href="../index.html">Spis treści</a>
+    <a href="rozdzial-02-filtr-przenoszenia.html">R.2 →</a>
+  </div>
+</nav>
+<div class="page">
+
+  <div class="viewport-readout">
+    <span>BUDŻET KLATKI · 16,7 ms</span><span>BUDŻET KLATKI · 4 h</span><span>RÓŻNICA · ×860 000</span>
+  </div>
+
+  <div class="eyebrow">Rozdział 1 / Dwa światy</div>
+  <h1>Dwa zegary: 16 milisekund kontra noc renderu</h1>
+  <p class="subtitle">Gamedev i VFX rozwiązują ten sam problem obrazu przy dwóch skrajnie różnych budżetach czasu — i ta jedna różnica tłumaczy niemal wszystkie pozostałe.</p>
+
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Gra ma na całą klatkę około 16,7 milisekundy, film — kilka godzin. To różnica bliska miliona razy i to z niej, a nie z gustu czy talentu, biorą się wszystkie różnice w nawykach obu branż.</li>
+      <li>Ciasny budżet wymusza kulturę mierzenia, przeliczania z góry i wielokrotnego użycia. Luźny budżet pozwala na unikat, brutalną siłę i poprawianie rzeczy dopiero wtedy, gdy zaczną boleć.</li>
+      <li>Budżet VFX nie jest nieskończony — jest odroczony i niewidoczny. Godziny farmy, pamięć węzła renderującego i czas czekania artysty na podgląd to dokładnie ta sama waluta, tylko nikt jej nie wyświetla na ekranie.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <p>Obie branże robią technicznie to samo: zamieniają geometrię, materiały i światło w piksele. Używają tych samych programów, tych samych formatów wymiany, w dużej mierze tego samego modelu materiału. A mimo to artysta środowisk z gier i artysta środowisk z VFX pracują zupełnie inaczej — inaczej planują asset, inaczej rozkładają UV, inaczej reagują na prośbę „dodaj tu jeszcze pięćdziesiąt skrzyń". Ta książka jest o tym, co warto przenieść z jednej strony na drugą, ale zaczyna się od jedynej różnicy, z której wynika cała reszta: od zegara.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap: Dwie liczby</div>
+    <h2>16,7 milisekundy i cztery godziny</h2>
+    <p>Gra działająca w 60 klatkach na sekundę ma na wyprodukowanie jednej klatki <span class="term-amber">16,7 milisekundy</span>. W tym czasie musi zmieścić się <em>wszystko</em>: logika rozgrywki, fizyka, animacja, dźwięk, interfejs — a renderowanie dostaje z tego może dwie trzecie. Przy 30 klatkach budżet rośnie do 33 milisekund, w VR spada do 11 i jest twardszy, bo spadek poniżej progu nie wygląda źle, tylko powoduje mdłości. Ten budżet nie jest celem, do którego się dąży. To warunek, którego złamanie oznacza, że produkt jest zepsuty.</p>
+    <p>Klatka filmowego shotu VFX liczy się na farmie zwykle od kilkudziesięciu minut do kilkunastu godzin. Przyjmijmy ostrożne <span class="term-cyan">cztery godziny</span>. To 14 400 000 milisekund — blisko <strong>milion razy</strong> więcej niż budżet klatki w grze. Nie o rząd wielkości. O sześć rzędów.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Frame.budget</span><span>Ta sama klatka, dwa zegary</span></div>
+      <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="20" y="28">GRA · 60 fps</text>
+          <text x="20" y="140">VFX · klatka finalna</text>
+        </g>
+
+        <rect x="20" y="38" width="660" height="34" rx="6" fill="#20242c" stroke="#e8a33d" stroke-width="1.5"/>
+        <line x1="240" y1="38" x2="240" y2="72" stroke="#e8a33d" stroke-opacity="0.5"/>
+        <line x1="400" y1="38" x2="400" y2="72" stroke="#e8a33d" stroke-opacity="0.5"/>
+        <line x1="520" y1="38" x2="520" y2="72" stroke="#e8a33d" stroke-opacity="0.5"/>
+        <g font-family="IBM Plex Sans" font-size="10.5" fill="#ecebe4" text-anchor="middle">
+          <text x="130" y="60">geometria + cienie</text>
+          <text x="320" y="60">oświetlenie</text>
+          <text x="460" y="60">post</text>
+          <text x="600" y="60">gra, fizyka, UI, dźwięk</text>
+        </g>
+        <text x="350" y="92" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d">16,7 ms — cała klatka, każda klatka, u każdego gracza</text>
+
+        <rect x="20" y="150" width="660" height="34" rx="6" fill="#20242c" stroke="#4fc3c0" stroke-width="1.5"/>
+        <g font-family="IBM Plex Sans" font-size="10.5" fill="#ecebe4" text-anchor="middle">
+          <text x="350" y="172">ścieżki światła liczone brutalną siłą, aż szum spadnie poniżej progu</text>
+        </g>
+        <text x="350" y="204" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0">4 h = 14 400 000 ms — raz, na farmie, w nocy</text>
+
+        <text x="350" y="234" text-anchor="middle" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">te same paski w skali: pasek gry miałby tu 0,0008 piksela szerokości</text>
+      </svg>
+      <div class="diagram-caption">Nie da się narysować tej różnicy uczciwie w skali — i o to właśnie chodzi.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap: Co robi z ludźmi ciasny budżet</div>
+    <h2>Nawyki, które wymusza zegar 16-milisekundowy</h2>
+    <p>Kiedy budżet jest twardy i mierzalny, produkcja układa się wokół czterech odruchów. Warto je nazwać, bo w kolejnych rozdziałach wracają pod różnymi postaciami — to one, a nie konkretne narzędzia, są prawdziwym przedmiotem tej książki.</p>
+    <ul class="compact">
+      <li><strong>Mierzenie zamiast oceniania.</strong> Asset ma liczbę: tyle trójkątów, tyle megabajtów tekstur, tyle materiałów. Profiler pokazuje, ile milisekund kosztuje scena i co dokładnie te milisekundy zjada. Zdanie „to chyba za ciężkie" nie kończy dyskusji — kończy ją pomiar.</li>
+      <li><strong>Przeliczanie z góry.</strong> Wszystko, co da się policzyć przed uruchomieniem, zostaje policzone przed uruchomieniem i zapisane do tekstury albo do danych wierzchołków. Cały Rozdział 16 o bakingu jest rozwinięciem tego jednego odruchu.</li>
+      <li><strong>Wielokrotne użycie zamiast unikatu.</strong> Jeżeli coś ma się pojawić w scenie sto razy, to lepiej, żeby było jedną rzeczą użytą sto razy niż stoma rzeczami. Stąd trim sheety (Rozdział 5), modularność (Rozdział 7) i instancing (Rozdział 12).</li>
+      <li><strong>Świadome przybliżanie.</strong> Zamiast policzyć zjawisko poprawnie, liczy się coś, co wygląda tak samo w warunkach, w jakich gracz to zobaczy. Cały real-time rendering to katalog takich decyzji — wrócimy do niego w Rozdziale 19.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap: Co robi z ludźmi luźny budżet</div>
+    <h2>Nawyki, które pozwala mieć zegar czterogodzinny</h2>
+    <p>Po stronie VFX zegar jest na tyle luźny, że produkcja może sobie pozwolić na odwrotny zestaw odruchów — i przez większość czasu ma rację, że sobie pozwala. Poprawność przed sprytem: skoro path tracer policzy odbicie od odbicia od załamania fizycznie, nie ma powodu tego przybliżać. Unikat przed powtórzeniem: skoro ten mur pojawia się w trzech shotach i nigdzie indziej, może mieć własne tekstury w 8K. Poprawka doraźna przed systemową: skoro problem dotyczy jednego shotu, taniej jest go w tym jednym shocie zaklepać niż przebudować asset.</p>
+    <p>Każde z tych zdań jest sensowne osobno. Razem tworzą kulturę, w której nikt nie zna liczb — i to jest miejsce, w którym gamedev ma coś do zaoferowania. Nie dlatego, że VFX robi coś źle, tylko dlatego, że mierzenie przestało być darmowe akurat wtedy, gdy przestało być opcjonalne.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap: Rachunek, którego nikt nie wystawia</div>
+    <h2>Budżet VFX istnieje — jest tylko odroczony</h2>
+    <p>Klatka, którą liczy się cztery godziny, ma swoją cenę. Płaci się ją w trzech walutach naraz i żadnej z nich nie widać na ekranie artysty w momencie, w którym podejmuje decyzję.</p>
+    <ul class="compact">
+      <li><strong>Godziny farmy.</strong> Shot ma 120 klatek, a przez jego życie renderuje się go — z wersjami, poprawkami i technicalami — kilkanaście razy. To tysiące godzin maszynowych na jeden shot. Przy kilkuset shotach w produkcji różnica „ten asset renderuje się o 8% dłużej" przestaje być zaokrągleniem.</li>
+      <li><strong>Pamięć węzła.</strong> Render, który nie mieści się w RAM-ie maszyny, nie zwalnia — pada albo zaczyna korzystać z dysku, co jest tą samą klęską rozłożoną w czasie. Tu asset o zbyt dużych teksturach nie kosztuje procenta, tylko cały render.</li>
+      <li><strong>Czas artysty.</strong> Najdroższa z trzech, a najrzadziej liczona. Lookdev, w którym podgląd wraca po czterdziestu minutach, to inna praca niż lookdev, w którym wraca po sekundzie — i to nie dlatego, że artysta się nudzi, tylko dlatego, że decyzji da się w ciągu dnia podjąć dziesięć zamiast dwustu. Rozdział 17 jest w całości o tej jednej różnicy.</li>
+    </ul>
+    <p>Do tego dochodzi trend, którego nie da się już odwrócić: liczba shotów w produkcjach rośnie szybciej niż budżety, a terminy się skracają. Niedobór, który gamedev miał od zawsze, wrócił do VFX tylnymi drzwiami — nie jako limit sprzętowy, tylko jako kalendarz.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap: Gdzie przebiega granica</div>
+    <h2>Płacisz raz czy przy każdej klatce u każdego widza?</h2>
+    <p>Zanim przejdziemy dalej, warto zapisać rozróżnienie, które będzie potem wracać przy każdej technice. Gra płaci koszt <span class="term-amber">w czasie działania</span>: przy każdej klatce, na każdej maszynie, u każdego gracza, przez cały czas życia produktu. VFX płaci koszt <span class="term-cyan">w czasie produkcji</span>: raz, u siebie, na własnej farmie — a widz dostaje gotowy plik wideo, którego nic już nie kosztuje.</p>
+    <p>Z tego rozróżnienia wynika prosta reguła doboru: <span class="term-violet">techniki po stronie assetu przenoszą się prawie zawsze, techniki po stronie klatki — rzadko</span>. Trim sheet, budżet tekstur, LOD, instancing czy walidacja pliku przy publishu obniżają koszt niezależnie od tego, co go potem konsumuje: przyspieszają i grę, i renderfarmę, i viewport artysty. Za to real-time'owe przybliżenia oświetlenia są opłacalne dokładnie dlatego, że gra nie ma wyboru — a shot ma. Przenoszenie ich do finalnego renderu oznacza zwykle płacenie jakością za czas, którego akurat nie brakowało.</p>
+    <p>Ta granica nie jest ostra i w kilku miejscach książka będzie ją świadomie przekraczać — od tego jest cały Rozdział 19 o tym, kiedy przybliżenie wystarcza, i Rozdział 22 o wirtualnej produkcji, gdzie klatka z silnika trafia prosto na plan. Ale jako pierwsze przybliżenie działa dobrze: <strong>pytaj, czy technika oszczędza dane, czy oszczędza matematykę</strong>. Oszczędzanie danych przenosi się. Oszczędzanie matematyki wymaga uzasadnienia za każdym razem.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>Budżet klatki</dt>
+      <dd>Czas, jaki wolno zająć wyprodukowaniu jednej klatki. W grze twardy i mierzony w milisekundach, w VFX miękki i mierzony w godzinach farmy.</dd>
+      <dt>Profilowanie</dt>
+      <dd>Pomiar, na co dokładnie zużywa się budżet — która część sceny, który shader, który asset. Nawyk, którego VFX prawie nie ma.</dd>
+      <dt>Przeliczanie z góry (precompute)</dt>
+      <dd>Policzenie czegoś raz, poza czasem krytycznym, i zapisanie wyniku do odczytu — podstawa bakingu i większości optymalizacji assetowych.</dd>
+      <dt>Koszt runtime kontra koszt produkcji</dt>
+      <dd>Czy za technikę płaci się przy każdym wyświetleniu, czy raz podczas produkcji. Rozróżnienie decydujące o tym, czy dany patent w ogóle warto przenosić.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Skoro wiemy już, skąd biorą się różnice, potrzebujemy narzędzia do decydowania. Następny rozdział proponuje trzy pytania, które warto zadać każdemu patentowi z gamedevu, zanim trafi do pipeline'u VFX — i pokazuje kilka technik, które te pytania oblewają, mimo że na konferencjach wyglądają znakomicie.</p>
+  </div>
+
+<div class="site-nav chapter-nav">
+    <span class="nav-prev"></span>
+    <a class="nav-toc" href="../index.html">Spis treści</a>
+    <a class="nav-next" href="rozdzial-02-filtr-przenoszenia.html">Następny →</a>
+</div>
+</div>
+</body>
+</html>

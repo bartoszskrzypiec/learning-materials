@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gamedev w VFX — Spis treści</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.page{max-width:920px;padding:64px 24px 120px;}
+h1{line-height:1.1;}
+.subtitle{margin:0 0 40px;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="topnav__brand" href="index.html">Gamedev <span>w VFX</span></a>
+  <div class="topnav__links">
+    <a href="rozdzialy/rozdzial-01-dwa-zegary.html">R.1 →</a>
+  </div>
+</nav>
+<div class="page">
+
+  <div class="eyebrow">Gamedev w VFX / Spis treści</div>
+  <h1>Gamedev w VFX</h1>
+  <p class="subtitle">Ta książka jest o jednym pytaniu: które nawyki, workflow i patenty wypracowane w produkcji gier realnie opłaca się przenieść do pipeline'u VFX — a które tylko dobrze wyglądają na slajdzie. Punkt ciężkości leży na assetach: trim sheetach, atlasach i texel density, modularności, budżetach, LOD-ach i instancingu, bo tam różnica w podejściu jest największa, a zysk najłatwiejszy do pokazania w liczbach. Druga połowa dotyczy renderingu i danych: real-time'owego lookdevu jako narzędzia decyzji, bakingu, parity między silnikiem a path tracerem, walidacji assetów i proceduralności. Książka nie zakłada, że gamedev robi wszystko lepiej — jeden z rozdziałów jest w całości o tym, czego z niego <em>nie</em> przenosić. Zakłada tylko, że dwadzieścia lat pracy pod twardym budżetem klatki wytworzyło zestaw odruchów, które w VFX zaczynają się przydawać dokładnie teraz, gdy shotów jest więcej, a czasu mniej. To żywy projekt: rozdziały i dodatki są dopisywane sesja po sesji, nie powstały jednorazowo.</p>
+
+  <div class="panel practice">
+    <div class="panel-label">Stan książki</div>
+    <p>Pełna struktura i spis treści już stoją — każdy rozdział i dodatek ma ustalony tytuł, miejsce i zakres. Napisane w całości są na razie <a href="rozdzialy/rozdzial-01-dwa-zegary.html">Rozdział 1</a> i <a href="rozdzialy/rozdzial-05-trim-sheety.html">Rozdział 5</a>; pozostałe strony pokazują panel „W przygotowaniu”.</p>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Część I · Dwa światy, jeden warsztat (R.1–3)</div>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-01-dwa-zegary.html"><span class="index-num">Rozdział 1</span><span class="index-title">Dwa zegary: 16 milisekund kontra noc renderu</span><span class="index-hook">Gamedev i VFX rozwiązują ten sam problem obrazu przy dwóch skrajnie różnych budżetach czasu — i ta jedna różnica tłumaczy niemal wszystkie pozostałe.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-02-filtr-przenoszenia.html"><span class="index-num">Rozdział 2</span><span class="index-title">Filtr: co się przenosi, a co tylko wygląda, jakby się przenosiło</span><span class="index-hook">Zanim przeciągniesz cokolwiek z gamedevu do VFX, warto mieć trzy pytania, które odsiewają patenty realnie użyteczne od kultu cargo.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-03-wspolny-fundament.html"><span class="index-num">Rozdział 3</span><span class="index-title">Wspólny fundament: PBR, USD i te same DCC</span><span class="index-hook">Obie branże od dawna stoją na tych samych filarach — i właśnie dlatego przenoszenie workflow jest w ogóle wykonalne, a nie tylko efektowne w prezentacji.</span></a>
+    </div>
+  </div>
+  <div class="part">
+    <div class="part-label">Część II · Autoring assetów (R.4–9)</div>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-04-budzet-jako-narzedzie.html"><span class="index-num">Rozdział 4</span><span class="index-title">Budżet jako narzędzie projektowe</span><span class="index-hook">W grze budżet tekstur i trójkątów jest twardą liczbą, którą widać codziennie. W VFX też istnieje — tylko nikt go nie mierzy, dopóki nie wybuchnie farma.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-05-trim-sheety.html"><span class="index-num">Rozdział 5</span><span class="index-title">Trim sheety: jedna tekstura, całe środowisko</span><span class="index-hook">Najbardziej opłacalny patent, jaki gamedev ma do zaoferowania środowiskom VFX — jeden arkusz krawędzi i profili, z którego da się zbudować pół setu.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-06-atlasy-udim-texel-density.html"><span class="index-num">Rozdział 6</span><span class="index-title">Atlasy, UDIM-y i texel density</span><span class="index-hook">Ile pikseli na centymetr ma Twój asset? W gamedevie to pytanie z odpowiedzią w liczbie, w VFX zwykle wzruszenie ramion — a to dokładnie ta sama wielkość.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-07-modularnosc-kitbashing.html"><span class="index-num">Rozdział 7</span><span class="index-title">Modularność i kit-bashing: asset jako klocek</span><span class="index-hook">Set zbudowany z pięćdziesięciu powtarzalnych części zamiast pięciuset unikatów — i dlaczego wcale nie musi wyglądać na powtarzalny.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-08-tileable-dekale-blendy.html"><span class="index-num">Rozdział 8</span><span class="index-title">Tileable, dekale i blendy: autoring warstwowy</span><span class="index-hook">Zamiast jednej wielkiej unikalnej mapy — baza kafelkowa, dekale na to, co wyróżnia, i blend tam, gdzie jedno przechodzi w drugie.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-09-higiena-assetu.html"><span class="index-num">Rozdział 9</span><span class="index-title">Higiena assetu: nazwy, pivoty, skala, UV</span><span class="index-hook">Nudna warstwa, której gamedev pilnuje obsesyjnie, bo inaczej gra się nie zbuduje — a która w VFX kosztuje dokładnie tyle samo, tylko później.</span></a>
+    </div>
+  </div>
+  <div class="part">
+    <div class="part-label">Część III · Geometria i skala (R.10–13)</div>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-10-lod-y.html"><span class="index-num">Rozdział 10</span><span class="index-title">LOD-y: dyscyplina geometrii dostatecznie dobrej</span><span class="index-hook">Proxy i standin z VFX to LOD w przebraniu. Różnica polega na tym, że w grze ktoś policzył, kiedy dokładnie przełączyć.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-11-imposters.html"><span class="index-num">Rozdział 11</span><span class="index-title">Imposters i billboardy: obraz zamiast geometrii</span><span class="index-hook">Kiedy przestaje opłacać się mieć obiekt, a zaczyna opłacać jego zdjęcie — pytanie stare jak matte painting, tylko z automatem do generowania.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-12-instancing-scattering.html"><span class="index-num">Rozdział 12</span><span class="index-title">Instancing i scattering: jedna geometria, milion kopii</span><span class="index-hook">Las, tłum, gruz. W obu branżach ta sama zasada: nie kopiuj danych, kopiuj wskaźnik i macierz.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-13-nanite-kontra-subdiv.html"><span class="index-num">Rozdział 13</span><span class="index-title">Nanite kontra subdivision i displacement</span><span class="index-hook">Dwie odpowiedzi na to samo pytanie: skąd wziąć szczegół, którego nie ma w siatce bazowej — jedna zbudowana pod klatkę, druga pod renderfarmę.</span></a>
+    </div>
+  </div>
+  <div class="part">
+    <div class="part-label">Część IV · Tekstury i pamięć (R.14–16)</div>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-14-mipmapy-streaming-vt.html"><span class="index-num">Rozdział 14</span><span class="index-title">Mipmapy, streaming i tekstury wirtualne</span><span class="index-hook">Gra nigdy nie ma w pamięci wszystkich tekstur i nikt tego nie zauważa. Render w VFX zwykle próbuje mieć wszystkie — i czasem właśnie na tym pada.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-15-kompresja-tekstur.html"><span class="index-num">Rozdział 15</span><span class="index-title">Kompresja: BC, ASTC, EXR i .tx</span><span class="index-hook">Ta sama tekstura potrafi zajmować 4 MB albo 64 MB w zależności od jednego ustawienia — i tylko jedna z tych liczb jest przypadkowa.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-16-baking.html"><span class="index-num">Rozdział 16</span><span class="index-title">Baking: normal, AO, curvature, position</span><span class="index-hook">Piekarnia gamedevu przeniesiona do lookdevu — mapy, które zamieniają policzalny, ale drogi detal na tani odczyt z tekstury.</span></a>
+    </div>
+  </div>
+  <div class="part">
+    <div class="part-label">Część V · Real-time lookdev i rendering (R.17–22)</div>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-17-petla-iteracji.html"><span class="index-num">Rozdział 17</span><span class="index-title">Pętla iteracji: sekunda kontra noc</span><span class="index-hook">Największy zysk z real-time'u w VFX nie leży w finalnej klatce, tylko w liczbie decyzji, które da się podjąć przed lunchem.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-18-shader-graph-osl-materialx.html"><span class="index-num">Rozdział 18</span><span class="index-title">Shader graph, OSL i MaterialX</span><span class="index-hook">Dwa sposoby myślenia o materiale — graf, który musi skompilować się do GPU, i graf, który może pozwolić sobie na pętlę — plus standard, który próbuje je pogodzić.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-19-lumen-rt-pathtracer.html"><span class="index-num">Rozdział 19</span><span class="index-title">Lumen, ray tracing i path tracer: kiedy przybliżenie wystarcza</span><span class="index-hook">Real-time GI to seria świadomych kłamstw o świetle. Warto wiedzieć których, żeby rozpoznać moment, w którym kłamstwo widać na ekranie.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-20-denoising-upscaling-motion-vectors.html"><span class="index-num">Rozdział 20</span><span class="index-title">Denoising, upscaling i motion vectors</span><span class="index-hook">Ta sama matematyka odszumia render z path tracera i dorabia klatki w grze — z jedną różnicą, która decyduje o tym, czy wolno jej użyć w shocie.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-21-look-parity.html"><span class="index-num">Rozdział 21</span><span class="index-title">Look parity: dopiąć preview do finalnego renderu</span><span class="index-hook">Preview, któremu nie można zaufać, jest gorszy niż jego brak — jak zbudować most między silnikiem a renderfarmą, który nie kłamie o kolorze.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-22-wirtualna-produkcja.html"><span class="index-num">Rozdział 22</span><span class="index-title">Wirtualna produkcja: LED, ICVFX i previz w silniku</span><span class="index-hook">Miejsce, w którym te dwie branże już się zderzyły na planie — i gdzie asset z gry musi wytrzymać spojrzenie kamery filmowej.</span></a>
+    </div>
+  </div>
+  <div class="part">
+    <div class="part-label">Część VI · Pipeline i dane (R.23–26)</div>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-23-perforce-ddc-hot-reload.html"><span class="index-num">Rozdział 23</span><span class="index-title">Perforce, DDC i hot reload</span><span class="index-hook">Gra buduje się kilkanaście razy dziennie, więc cache i przeładowanie w locie nie są luksusem, tylko warunkiem pracy. VFX dopiero się tego uczy.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-24-proceduralnosc-pdg.html"><span class="index-num">Rozdział 24</span><span class="index-title">Proceduralność: Houdini, PDG i generowanie zamiast modelowania</span><span class="index-hook">Jedyny obszar, w którym ruch idzie w drugą stronę — to VFX nauczyło gamedev, że asset może być przepisem, nie plikiem.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-25-walidacja-ci.html"><span class="index-num">Rozdział 25</span><span class="index-title">Walidacja automatyczna: CI dla assetów</span><span class="index-hook">Skoro maszyna potrafi sprawdzić, czy kod się kompiluje, potrafi też sprawdzić, czy asset ma pivot w zerze i nienachodzące UV.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-26-biblioteki-asset-store.html"><span class="index-num">Rozdział 26</span><span class="index-title">Biblioteki i asset store'y: kupione, skanowane, wygenerowane</span><span class="index-hook">Gamedev dawno przestał traktować gotowy asset jak oszustwo. VFX robi to samo od lat, tylko rzadziej się do tego przyznaje.</span></a>
+    </div>
+  </div>
+  <div class="part">
+    <div class="part-label">Część VII · Domknięcie (R.27–28)</div>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-27-czego-nie-przenosic.html"><span class="index-num">Rozdział 27</span><span class="index-title">Czego nie przenosić z gamedevu</span><span class="index-hook">Lista rzeczy, które w grze są cnotą, a w shocie kosztownym błędem — bo książka o przenoszeniu patentów bez tego rozdziału byłaby nieuczciwa.</span></a>
+      <a class="index-row" href="rozdzialy/rozdzial-28-epilog-jeden-asset.html"><span class="index-num">Rozdział 28</span><span class="index-title">Epilog: jeden asset od skanu do klatki</span><span class="index-hook">Prześledźmy jeden rekwizyt przez wszystkie patenty z tej książki — od skanu, przez trim sheet i LOD-y, po finalną klatkę z path tracera.</span></a>
+    </div>
+  </div>
+  <div class="part">
+    <div class="part-label violet">Dodatki A–N · głębiej w konkretny mechanizm</div>
+    <div class="index-list">
+      <a class="index-row" href="dodatki/dodatek-a-texel-density-w-liczbach.html"><span class="index-num">Dodatek A · rozwija R.6</span><span class="index-title">Texel density w liczbach</span><span class="index-hook">Rozdział 6 podał zasadę. Tu są liczby: jak policzyć px/cm dla dowolnego assetu, jakie wartości stosuje się realnie i co się dzieje, gdy dwa sąsiadujące obiekty mają różne.</span></a>
+      <a class="index-row" href="dodatki/dodatek-b-anatomia-trim-sheetu.html"><span class="index-num">Dodatek B · rozwija R.5</span><span class="index-title">Anatomia trim sheetu krok po kroku</span><span class="index-hook">Budowa jednego arkusza od pustego płótna: podział pasów, marginesy, co daje się powtarzać w poziomie, a co nie, i jak zaplanować go pod UV, zanim powstanie pierwszy piksel.</span></a>
+      <a class="index-row" href="dodatki/dodatek-c-udim-kontra-atlas.html"><span class="index-num">Dodatek C · rozwija R.6</span><span class="index-title">UDIM kontra atlas: kiedy które</span><span class="index-hook">Dwa sposoby na to samo — rozłożenie powierzchni na wiele tekstur. Jeden zoptymalizowany pod pamięć GPU, drugi pod rozdzielczość hero assetu z bliska.</span></a>
+      <a class="index-row" href="dodatki/dodatek-d-budzety-pamieci.html"><span class="index-num">Dodatek D · rozwija R.4</span><span class="index-title">Budżety pamięci: skąd biorą się liczby</span><span class="index-hook">Dlaczego akurat 8 GB, akurat 4096 px i akurat 150 tysięcy trójkątów — rozłożenie realnego budżetu na czynniki, które da się policzyć zamiast zgadywać.</span></a>
+      <a class="index-row" href="dodatki/dodatek-e-progi-lod.html"><span class="index-num">Dodatek E · rozwija R.10</span><span class="index-title">Progi LOD: jak wybiera się moment przełączenia</span><span class="index-hook">Screen size, histereza i popping — mechanika decyzji, która w VFX zwykle sprowadza się do „przełącz ręcznie, jak supervisor zauważy”.</span></a>
+      <a class="index-row" href="dodatki/dodatek-f-imposters-oktahedralne.html"><span class="index-num">Dodatek F · rozwija R.11</span><span class="index-title">Imposters oktahedralne od środka</span><span class="index-hook">Jak zapakować widok obiektu ze wszystkich stron w jeden atlas i odtworzyć go z dowolnego kąta — z interpolacją, która nie miga przy ruchu kamery.</span></a>
+      <a class="index-row" href="dodatki/dodatek-g-nanite-od-srodka.html"><span class="index-num">Dodatek G · rozwija R.13</span><span class="index-title">Nanite od środka: klastry, hierarchia, ograniczenia</span><span class="index-hook">Rozdział 13 potraktował Nanite jako czarną skrzynkę. Tu otwieramy ją: klastry, hierarchiczny wybór poziomu i lista rzeczy, których ta technika nie umie.</span></a>
+      <a class="index-row" href="dodatki/dodatek-h-kompresja-formaty.html"><span class="index-num">Dodatek H · rozwija R.15</span><span class="index-title">Formaty i kompresja tekstur: BC1–BC7, ASTC, DWAA</span><span class="index-hook">Co dokładnie robi każdy z tych formatów z Twoimi pikselami, gdzie artefakty pojawiają się najpierw i dlaczego mapa normalnych ma własne reguły.</span></a>
+      <a class="index-row" href="dodatki/dodatek-i-wirtualne-tekstury.html"><span class="index-num">Dodatek I · rozwija R.14</span><span class="index-title">Tekstury wirtualne i streaming od środka</span><span class="index-hook">Feedback buffer, kafelki, opóźnienie jednej klatki — mechanizm, dzięki któremu gra pokazuje teksturę, której w momencie rysowania jeszcze nie miała w pamięci.</span></a>
+      <a class="index-row" href="dodatki/dodatek-j-baking-artefakty.html"><span class="index-num">Dodatek J · rozwija R.16</span><span class="index-title">Baking: cage, ray distance i katalog artefaktów</span><span class="index-hook">Skąd biorą się te wszystkie dziwne smugi na wypalonej mapie normalnych — i który parametr odpowiada za każdą z nich.</span></a>
+      <a class="index-row" href="dodatki/dodatek-k-taa-dlss-motion-vectors.html"><span class="index-num">Dodatek K · rozwija R.20</span><span class="index-title">TAA, DLSS, FSR i motion vectors od środka</span><span class="index-hook">Akumulacja w czasie, reprojekcja i ghosting — jak dokładnie działa rekonstrukcja temporalna i dlaczego bez wektorów ruchu nie ma się czego akumulować.</span></a>
+      <a class="index-row" href="dodatki/dodatek-l-materialx-openpbr.html"><span class="index-num">Dodatek L · rozwija R.18</span><span class="index-title">MaterialX i OpenPBR jako wspólny język materiału</span><span class="index-hook">Próba, żeby ten sam materiał znaczył to samo w silniku gry i w path tracerze — co ten standard rzeczywiście gwarantuje, a czego nie.</span></a>
+      <a class="index-row" href="dodatki/dodatek-m-pdg-tops.html"><span class="index-num">Dodatek M · rozwija R.24</span><span class="index-title">PDG/TOPs: graf zadań zamiast skryptu</span><span class="index-hook">Generowanie dwustu wariantów assetu bez pisania pętli — i bez ponownego liczenia stu dziewięćdziesięciu, które się nie zmieniły.</span></a>
+      <a class="index-row" href="dodatki/dodatek-n-walidator-assetu.html"><span class="index-num">Dodatek N · rozwija R.25</span><span class="index-title">Walidator assetu: lista kontrolna, którą da się zautomatyzować</span><span class="index-hook">Konkretne testy, gotowe do wpięcia w publish — od skali i pivota po nakładające się UV i nieużywane materiały, z uzasadnieniem każdego z nich.</span></a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

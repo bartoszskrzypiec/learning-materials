@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rozdział 5 — Trim sheety: jedna tekstura, całe środowisko</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="topnav__brand" href="../index.html">Gamedev <span>w VFX</span></a>
+  <div class="topnav__links">
+    <a href="rozdzial-04-budzet-jako-narzedzie.html">← R.4</a>
+    <a href="../index.html">Spis treści</a>
+    <a href="rozdzial-06-atlasy-udim-texel-density.html">R.6 →</a>
+  </div>
+</nav>
+<div class="page">
+
+  <div class="viewport-readout">
+    <span>TRIM · 2048×2048</span><span>POKRYCIE · 46 elementów</span><span>UNIKALNYCH MAP · 1</span>
+  </div>
+
+  <div class="eyebrow">Rozdział 5 / Assety</div>
+  <h1>Trim sheety: jedna tekstura, całe środowisko</h1>
+  <p class="subtitle">Najbardziej opłacalny patent, jaki gamedev ma do zaoferowania środowiskom VFX — jeden arkusz krawędzi i profili, z którego da się zbudować pół setu.</p>
+
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Trim sheet to jedna tekstura podzielona na poziome pasy, z których każdy zawiera inny profil powierzchni — gzyms, panel, rurę, pas nitów. Geometria dostaje UV przyklejone do wybranego pasa, a wzdłuż pasa może się rozciągać i powtarzać dowolnie.</li>
+      <li>Dzięki temu kilkadziesiąt różnych obiektów dzieli jeden materiał i jeden komplet map, zamiast mieć własne. W VFX zysk pamięciowy jest miłym efektem ubocznym — prawdziwy zysk to jedna tekstura do art-directingu zamiast czterdziestu sześciu.</li>
+      <li>To technika dla powierzchni budowanych z profili i krawędzi: architektura, wnętrza, konstrukcje przemysłowe, pojazdy. Nie dla organiki i nie dla hero assetu oglądanego z dwudziestu centymetrów — tam trim jest bazą, na którą dokłada się warstwę unikatu.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <p>Wyobraź sobie korytarz stacji: ściany z paneli, gzyms u sufitu, listwa przy podłodze, rury biegnące wzdłuż, kratownica, drzwi, framugi, szafki. Standardowe podejście VFX daje każdemu z tych elementów własne UV i własny komplet tekstur, bo tak jest najprościej i nikt nie pytał o liczby. Podejście z gamedevu zaczyna się od innego pytania: <em>ile tak naprawdę różnych powierzchni tu jest?</em> Odpowiedź prawie zawsze brzmi: znacznie mniej, niż obiektów. Gzyms, listwa i framuga to trzy różne kształty geometryczne pokryte tym samym malowanym metalem z tą samą fazowaną krawędzią.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap: Anatomia arkusza</div>
+    <h2>Pasy zamiast wysepek</h2>
+    <p><span class="term-amber">Trim sheet</span> to jedna kwadratowa tekstura — najczęściej 2048 albo 4096 pikseli — podzielona na poziome <span class="term-amber">pasy</span> (trims). Każdy pas to jeden profil powierzchni ciągnący się przez całą szerokość arkusza: fazowana krawędź gzymsu, panel z wgłębieniem, rura z kołnierzem, rząd nitów, pas czystego metalu bez detalu. Kluczowa właściwość: <strong>każdy pas jest powtarzalny w poziomie</strong> — jego lewa krawędź pasuje do prawej, więc da się go rozciągnąć na dowolną długość bez widocznego szwu.</p>
+    <p>Dzięki temu układ UV przestaje być zadaniem „rozłóż ten obiekt", a staje się zadaniem „przyklej tę powierzchnię do właściwego pasa". Współrzędna pionowa UV jest ustalona — wybiera pas. Współrzędna pozioma jest wolna — decyduje tylko o tym, jak długi kawałek profilu widać. Gzyms o długości dwóch metrów i gzyms o długości dwunastu metrów to ten sam pas, ta sama tekstura, inna wartość U.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trim.layout</span><span>Jeden arkusz, wiele obiektów</span></div>
+      <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrTrim" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#9c82d8"/>
+          </marker>
+        </defs>
+
+        <text x="20" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">TRIM SHEET · 2048 × 2048</text>
+
+        <!-- pasy arkusza: 512 / 256 / 256 / 512 / 128 / 128 / 256 texeli -->
+        <g stroke="#2a2f38">
+          <rect x="20" y="34" width="240" height="60" fill="#262b34"/>
+          <rect x="20" y="94" width="240" height="30" fill="#20242c"/>
+          <rect x="20" y="124" width="240" height="30" fill="#262b34"/>
+          <rect x="20" y="154" width="240" height="60" fill="#20242c"/>
+          <rect x="20" y="214" width="240" height="15" fill="#262b34"/>
+          <rect x="20" y="229" width="240" height="15" fill="#20242c"/>
+          <rect x="20" y="244" width="240" height="30" fill="#262b34"/>
+        </g>
+        <rect x="20" y="34" width="240" height="240" fill="none" stroke="#8b909b" stroke-width="1.5"/>
+
+        <g font-family="IBM Plex Mono" font-size="9" fill="#ecebe4">
+          <text x="28" y="68">gzyms / profil górny · 512 px</text>
+          <text x="28" y="113">panel z wgłębieniem · 256</text>
+          <text x="28" y="143">rura + kołnierz · 256</text>
+          <text x="28" y="188">pas gładki (malowany metal) · 512</text>
+          <text x="28" y="225">nity · 128</text>
+          <text x="28" y="240">pas zużycia / rdza · 128</text>
+          <text x="28" y="263">listwa przypodłogowa · 256</text>
+        </g>
+
+        <!-- strzałki do geometrii -->
+        <path d="M262,64 C320,64 320,70 372,70" fill="none" stroke="#9c82d8" stroke-width="1.4" marker-end="url(#arrTrim)"/>
+        <path d="M262,139 C320,139 320,150 372,150" fill="none" stroke="#9c82d8" stroke-width="1.4" marker-end="url(#arrTrim)"/>
+        <path d="M262,184 C320,184 320,196 372,196" fill="none" stroke="#9c82d8" stroke-width="1.4" marker-end="url(#arrTrim)"/>
+        <path d="M262,259 C320,259 320,236 372,236" fill="none" stroke="#9c82d8" stroke-width="1.4" marker-end="url(#arrTrim)"/>
+
+        <!-- geometria: fragment korytarza -->
+        <text x="380" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">GEOMETRIA · 4 osobne obiekty, 1 materiał</text>
+
+        <rect x="380" y="56" width="290" height="28" rx="3" fill="#20242c" stroke="#e8a33d" stroke-width="1.3"/>
+        <text x="525" y="75" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">gzyms — U rozciągnięte ×6</text>
+
+        <rect x="380" y="136" width="180" height="28" rx="3" fill="#20242c" stroke="#e8a33d" stroke-width="1.3"/>
+        <text x="470" y="155" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">rura — U ×3</text>
+
+        <rect x="380" y="182" width="290" height="28" rx="3" fill="#20242c" stroke="#e8a33d" stroke-width="1.3"/>
+        <text x="525" y="201" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">ściana — pas gładki, U ×8</text>
+
+        <rect x="380" y="222" width="290" height="28" rx="3" fill="#20242c" stroke="#e8a33d" stroke-width="1.3"/>
+        <text x="525" y="241" text-anchor="middle" font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">listwa — U ×6</text>
+
+        <text x="525" y="278" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">V wybiera pas · U rozciąga się dowolnie</text>
+      </svg>
+      <div class="diagram-caption">Wysokość pasa ustala, którą powierzchnię widać. Długość obiektu to już tylko wartość U.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap: Skąd się bierze arkusz</div>
+    <h2>Wypalony z high-poly albo zbudowany proceduralnie</h2>
+    <p>Arkusz powstaje na jeden z dwóch sposobów, zwykle mieszany. Pierwszy: modelujesz pasy jako geometrię wysokiej rozdzielczości — prawdziwy gzyms z prawdziwą fazą, prawdziwy nit — ustawiasz je równolegle nad płaską płytą i wypalasz z nich mapy normalnych, AO, krzywizny i pozycji (Rozdział 16 rozkłada baking na czynniki pierwsze). Drugi: budujesz arkusz proceduralnie w Substance Designerze albo równoważnym narzędziu, gdzie wszystkie profile są matematyką, a nie siatką, i da się je zmienić po fakcie jednym parametrem.</p>
+    <p>Oba dają na wyjściu ten sam komplet: kolor bazowy, normalne, roughness, metalness i — co dla VFX ważniejsze niż dla gier — <strong>mapę wysokości</strong>. W grze wysokość służy najwyżej do parallaxu i często się ją porzuca. W renderze offline ta sama mapa napędza prawdziwy displacement na subdivowanej powierzchni, więc krawędź gzymsu przestaje być kłamstwem w normalnych, a staje się geometrią rzucającą własny cień i łapiącą własne odbicie na sylwetce. Ten sam arkusz, więcej z niego wyciśnięte — o tym, kiedy displacement się opłaca, mówi Rozdział 13.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap: Rachunek</div>
+    <h2>Co dokładnie oszczędza jeden arkusz</h2>
+    <p>Weźmy skromny korytarz: 46 osobnych elementów, każdy z własnym kompletem trzech map w 2048 pikselach. Po stronie VFX tekstury nie są kompresowane blokowo jak w grze — render czyta kafelkowane <code>.tx</code> albo EXR-y w połowicznej precyzji, więc jedna mapa 2048×2048 w czterech kanałach half-float to około 32 MB w pamięci przy pełnej rozdzielczości.</p>
+
+    <div class="worked">
+      2048 × 2048 px × 4 kanały × 2 B  =  33,5 MB  (jedna mapa, pełny mip)<br>
+      3 mapy (kolor / normalne / roughness+metal)  =  ~100 MB na komplet<br><br>
+      46 unikalnych kompletów  =  <span style="color:#e8a33d;">~4,6 GB</span><br>
+      1 trim sheet dla wszystkich 46  =  <span style="color:#4fc3c0;">~100 MB</span><br><br>
+      różnica: ×46 — i to zanim policzymy hero assety, które i tak dostaną swoje
+    </div>
+
+    <p>Cache tekstur renderera nigdy nie trzyma wszystkiego naraz w pełnej rozdzielczości, więc realny szczyt zużycia będzie niższy — ale proporcja się nie zmienia, a to ona decyduje o tym, czy shot mieści się w pamięci węzła (Rozdział 4). Ważniejsze jednak jest to, czego ten rachunek nie pokazuje: <span class="term-violet">przy jednym arkuszu uwaga „ten metal jest za czysty" to jedna poprawka, a nie czterdzieści sześć</span>. W produkcji, w której notatki od supervisora przychodzą co dwa dni, to jest właściwy powód, żeby to robić. Pamięć jest premią.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap: Reguły, bez których to nie działa</div>
+    <h2>Cztery decyzje podejmowane przed pierwszym pikselem</h2>
+    <ul class="compact">
+      <li><strong>Texel density ustalasz pierwszy, nie ostatni.</strong> Arkusz ma jedną gęstość pikseli na centymetr i wszystko, co go używa, ją dziedziczy. Jeśli ustalisz ją po zbudowaniu połowy setu, druga połowa albo będzie rozmyta, albo trzeba będzie przerobić pierwszą. Rozdział 6 pokazuje, jak tę liczbę wybrać, a Dodatek A — jak ją policzyć.</li>
+      <li><strong>Wysokości pasów to potęgi dwójki.</strong> Pas 512, 256 albo 128 texeli mieści się w podziale arkusza bez reszty, więc przyklejenie UV do jego granicy jest operacją dokładną, a nie przeciąganiem na oko. Pas o wysokości 300 texeli działa dokładnie do momentu, w którym ktoś zrobi mipmapę.</li>
+      <li><strong>Na arkuszu nie ma nic charakterystycznego.</strong> Wyraźna plama, unikalny napis czy rozpoznawalne wgniecenie pojawi się wszędzie, gdzie użyto tego pasa — i to widać natychmiast. Charakter dokłada się osobno: dekalami i blendami, o których jest Rozdział 8.</li>
+      <li><strong>Jeden pas zostaw pusty i gładki.</strong> Powierzchnia bez detalu, użyteczna wszędzie tam, gdzie potrzeba tylko materiału, a nie profilu. To najczęściej używany pas na całym arkuszu i pierwszy, o którym się zapomina.</li>
+    </ul>
+    <a class="inline-deeper" href="../dodatki/dodatek-b-anatomia-trim-sheetu.html">Dodatek B — budowa arkusza krok po kroku →</a>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap: Granice metody</div>
+    <h2>Gdzie trim przestaje wystarczać — i co wtedy</h2>
+    <p>Trim sheet zakłada, że powierzchnia daje się opisać profilem powtarzalnym w jednym kierunku. Skała, tkanina, twarz i wszystko, co organiczne, tego założenia nie spełniają — tam sensowne są tileable materiały (Rozdział 8) albo klasyczne unikalne UV. Powierzchnie mocno zakrzywione albo nieregularnie zwężające się będą miały rozciągnięte UV, bo wzdłuż pasa skala się nie zgadza. A hero asset, na który kamera najeżdża na dwadzieścia centymetrów, potrzebuje więcej pikseli na centymetr, niż jeden wspólny arkusz jest w stanie dać którejkolwiek pojedynczej rzeczy.</p>
+    <p>Odpowiedzią jest podział, który w gamedevie jest odruchem, a w VFX bywa objawieniem: <strong>osiemdziesiąt procent setu na wspólnych arkuszach, dwadzieścia na unikalnych UDIM-ach</strong>. Kamera i tak patrzy na te dwadzieścia procent. Reszta ma być wiarygodna, spójna kolorystycznie i tania — a wspólny arkusz daje wszystkie trzy naraz, bo spójność bierze się stąd, że to dosłownie ta sama tekstura. Rozdział 6 pokazuje, jak te dwa światy — jeden arkusz i wiele UDIM-ów — współistnieją na jednym assecie bez konfliktu.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>Trim sheet</dt>
+      <dd>Tekstura podzielona na poziome pasy, z których każdy zawiera jeden powtarzalny profil powierzchni, współdzielona przez wiele obiektów.</dd>
+      <dt>Pas (trim)</dt>
+      <dd>Pojedynczy poziomy fragment arkusza — jeden profil, powtarzalny wzdłuż osi U.</dd>
+      <dt>Przyklejanie UV (UV snapping)</dt>
+      <dd>Ustawienie współrzędnej V wysepki dokładnie na granicach wybranego pasa, tak by trafiała w niego bez marginesu błędu.</dd>
+      <dt>Texel density</dt>
+      <dd>Liczba pikseli tekstury przypadająca na jednostkę powierzchni w świecie, zwykle podawana w px/cm. Wspólna dla całego arkusza.</dd>
+      <dt>Dekal</dt>
+      <dd>Osobny, nakładany element (plama, napis, uszkodzenie) dodający unikalność powierzchni pokrytej powtarzalnym materiałem.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Trim sheet stoi i upada na jednej liczbie — ile pikseli przypada na centymetr powierzchni. Następny rozdział zajmuje się właśnie tą liczbą: skąd ją brać, dlaczego w VFX prawie nikt jej nie zna, i jak pogodzić wspólny arkusz z UDIM-ami hero assetu w jednym pipelinie.</p>
+  </div>
+
+<div class="site-nav chapter-nav">
+    <a class="nav-prev" href="rozdzial-04-budzet-jako-narzedzie.html">← Poprzedni</a>
+    <a class="nav-toc" href="../index.html">Spis treści</a>
+    <a class="nav-next" href="rozdzial-06-atlasy-udim-texel-density.html">Następny →</a>
+</div>
+</div>
+</body>
+</html>
