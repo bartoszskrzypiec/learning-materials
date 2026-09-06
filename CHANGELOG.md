@@ -10,12 +10,14 @@ re-copying a file to see what changed since their last copy.
   everywhere they appeared, including the Polish hero paragraph, which the
   first pass missed. Polish only, seven parts, 28 chapters and 14
   appendices, all of them written (~32 000 words).
-  Its card is badged *Pages not enabled yet* and its action link points at
-  the **repository**, not at
-  https://bartoszskrzypiec.github.io/gamedev-vfx-book/ — the repo exists and
-  carries the book, but Pages has not been switched on for it, so the Pages
-  URL would 404. Swap the link to the Pages URL once the first deploy is
-  live; the README table row carries the same caveat.
+  Live at https://bartoszskrzypiec.github.io/gamedev-vfx-book/. The card was
+  briefly badged *Pages not enabled yet* while the repo existed without a
+  deploy; once the first deploy landed the badge became *Live* and both the
+  card link and the README table row moved from the repository URL to the
+  Pages URL. Note for whoever checks this from a session: the egress proxy
+  blocks `github.io`, so a session cannot verify the deploy itself — a curl
+  returns 000 for every book here, including the ones that have been live
+  for weeks.
   EN/PL span balance unchanged in kind (36 en / 38 pl — the two-span gap is
   still the `<html lang="pl">` root plus the language switch).
 - **No shared file changed.** Nothing in `assets/` or `patterns/` was
