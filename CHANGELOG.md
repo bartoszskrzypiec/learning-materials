@@ -3,6 +3,30 @@
 Plain dated log, no version numbers — consuming books check this before
 re-copying a file to see what changed since their last copy.
 
+## 2026-09-06 — seventh book listed
+
+- **`index.html`, `README.md`, `CLAUDE.md`** — added the seventh book,
+  *Gamedev w VFX* (`gamedev-vfx-book`), and updated the "six books" counts
+  everywhere they appeared, including the Polish hero paragraph, which the
+  first pass missed. Polish only, seven parts, 28 chapters and 14
+  appendices, all of them written (~32 000 words).
+  Live at https://bartoszskrzypiec.github.io/gamedev-vfx-book/. The card was
+  briefly badged *Pages not enabled yet* while the repo existed without a
+  deploy; once the first deploy landed the badge became *Live* and both the
+  card link and the README table row moved from the repository URL to the
+  Pages URL. Note for whoever checks this from a session: the egress proxy
+  blocks `github.io`, so a session cannot verify the deploy itself — a curl
+  returns 000 for every book here, including the ones that have been live
+  for weeks.
+  EN/PL span balance unchanged in kind (36 en / 38 pl — the two-span gap is
+  still the `<html lang="pl">` root plus the language switch).
+- **No shared file changed.** Nothing in `assets/` or `patterns/` was
+  touched, so no consuming book needs to re-copy anything on account of
+  this entry. The new book copies `interactive.js` from here and
+  `style.css` from `pipeline-book`, in the usual direction — out of this
+  repo, not into it.
+
+
 ## 2026-09-02 — sixth book listed, `thinFilmRGB()` scope documented
 
 - **`index.html`, `README.md`, `CLAUDE.md`** — added the sixth book,
