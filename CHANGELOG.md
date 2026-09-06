@@ -9,7 +9,7 @@ re-copying a file to see what changed since their last copy.
   *Gamedev w VFX* (`gamedev-vfx-book`), and updated the "six books" counts
   everywhere they appeared, including the Polish hero paragraph, which the
   first pass missed. Polish only, seven parts, 28 chapters and 14
-  appendices; two chapters written so far.
+  appendices, all of them written (~32 000 words).
   Its card is badged *Pages not enabled yet* and its action link points at
   the **repository**, not at
   https://bartoszskrzypiec.github.io/gamedev-vfx-book/ — the repo exists and
