@@ -19,6 +19,7 @@ book that doesn't use the 3D engine copies none of it.
 | Ray Tracing dla Artystów Technicznych | https://bartoszskrzypiec.github.io/raytracing-book/ | `raytracing-book` |
 | Atmosfera i chmury dla ciekawych | https://bartoszskrzypiec.github.io/atmosfera_chmury_book/ | `atmosfera_chmury_book` |
 | Optyka dla Artystów Technicznych | https://bartoszskrzypiec.github.io/optyka-book/ | `optyka-book` |
+| Gamedev w VFX | *Pages jeszcze niewłączone* | `gamedev-vfx-book` |
 
 ## What's here
 
@@ -53,10 +54,11 @@ See `docs/INTEGRATION.md` before copying anything in.
 
 ## Why a separate repo instead of one merged monorepo
 
-All six books already have independent, live, public GitHub Pages URLs
+All the books already have independent, public GitHub Pages URLs (the newest one's
+is pending its first deploy)
 with commit history, and most of them cross-link each other with absolute
 URLs. Merging them into one physical repo would mean either breaking all
-six existing URLs, or standing up GitHub Actions/CI to keep deploying six
+existing URLs, or standing up GitHub Actions/CI to keep deploying seven
 separate sites from one repo — both of which contradict the
 "no build system, no CI" principle every one of these projects states in
 its own `CLAUDE.md`. This repo sidesteps that entirely: it's the one
