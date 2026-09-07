@@ -3,6 +3,31 @@
 Plain dated log, no version numbers — consuming books check this before
 re-copying a file to see what changed since their last copy.
 
+## 2026-09-07 — two missing tokens added to the CSS contract
+
+- **`docs/INTEGRATION.md`** — the token list for `widgets.css` was
+  incomplete. Two custom properties are read by the stylesheet but were
+  never documented, so a book following the contract to the letter still
+  ended up with unstyled blocks:
+  - **`--code-bg`** — the `.formula` background (`widgets.css:345`).
+    Without it the formula block is transparent and loses its frame
+    against the page.
+  - **`--bg`** — backs the language switch and the `.seg` segmented
+    toggle (`widgets.css:51`, `:269`). Without it the control renders
+    with whatever sits behind it.
+
+  Both are now in the contract block, in the worked alias example, and in
+  the note explaining which tokens the JS `theme()` does *not* read.
+
+  **No code changed** — this is a documentation gap, and exactly the same
+  class of gap as the `--bg-elevated`/`--radius` one fixed on 2026-08-28.
+  Found the same way too: by building a new consuming book against the
+  documented list and seeing which blocks came out wrong.
+
+  Consuming books do not need to re-copy anything. Check whether your
+  `:root` defines these two; if it doesn't and you use `.formula` or the
+  language switch, add them as aliases onto your own palette.
+
 ## 2026-09-06 — seventh book listed
 
 - **`index.html`, `README.md`, `CLAUDE.md`** — added the seventh book,

@@ -301,16 +301,20 @@ custom properties from whatever stylesheet your book already loads:
 ```
 --text        --text-muted    --border      --accent
 --viz-a       --viz-b         --viz-grid    --viz-bg
---bg-elevated --radius
+--bg-elevated --radius        --code-bg     --bg
 ```
 
 (`assets/css/viz3d.css`, the 3D component layer, reads the same set plus
 three optional tokens of its own — see its section above.)
 
-(The last two, `--bg-elevated` and `--radius`, are read only by
-`widgets.css`'s `.viz`/`.ctl` rules, not by `viz.js`'s JS `theme()` — easy to
-miss if you only check the JS. Both `raytracing_book`'s and `lookdev_book`'s
-first real pilot widgets hit this gap before it was added here.)
+(The last four are read only by `widgets.css`, not by `viz.js`'s JS
+`theme()` — easy to miss if you only check the JS. `--bg-elevated` and
+`--radius` feed the `.viz`/`.ctl` rules; both `raytracing_book`'s and
+`lookdev_book`'s first real pilot widgets hit that gap before it was added
+here. `--code-bg` is the `.formula` background (`widgets.css:345`) and
+`--bg` backs the language switch and the `.seg` toggle (`widgets.css:51`,
+`:269`) — a book that omits either gets a transparent block where a filled
+one was intended, which reads as a styling bug rather than a missing token.)
 
 If your book's palette uses different names, alias them once — don't edit
 `viz.js` or `widgets.css` to rename what they read. Worked example, mapping
@@ -322,6 +326,7 @@ onto this contract:
   --text-muted:   var(--text-dim);
   --accent:       var(--amber);      /* or --raster — your call */
   --bg-elevated:  var(--bg-panel);
+  --code-bg:      var(--bg-panel-alt);
   --radius:       10px;
   --viz-a:        var(--violet);
   --viz-b:        var(--cyan);
