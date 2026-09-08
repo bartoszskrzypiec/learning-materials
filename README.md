@@ -20,6 +20,7 @@ book that doesn't use the 3D engine copies none of it.
 | Atmosfera i chmury dla ciekawych | https://bartoszskrzypiec.github.io/atmosfera_chmury_book/ | `atmosfera_chmury_book` |
 | Optyka dla Artystów Technicznych | https://bartoszskrzypiec.github.io/optyka-book/ | `optyka-book` |
 | Gamedev w VFX | https://bartoszskrzypiec.github.io/gamedev-vfx-book/ | `gamedev-vfx-book` |
+| Git dla Artystów Technicznych | https://bartoszskrzypiec.github.io/git-book/ | `git-book` |
 
 ## What's here
 
@@ -54,10 +55,10 @@ See `docs/INTEGRATION.md` before copying anything in.
 
 ## Why a separate repo instead of one merged monorepo
 
-All seven books already have independent, live, public GitHub Pages URLs
+All eight books already have independent, live, public GitHub Pages URLs
 with commit history, and most of them cross-link each other with absolute
 URLs. Merging them into one physical repo would mean either breaking all
-existing URLs, or standing up GitHub Actions/CI to keep deploying seven
+existing URLs, or standing up GitHub Actions/CI to keep deploying eight
 separate sites from one repo — both of which contradict the
 "no build system, no CI" principle every one of these projects states in
 its own `CLAUDE.md`. This repo sidesteps that entirely: it's the one

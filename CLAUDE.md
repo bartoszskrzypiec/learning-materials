@@ -4,10 +4,10 @@ Guidance for Claude Code sessions working in this repo.
 
 ## What this repo is (and isn't)
 
-This is **not** a book. It's the shared toolkit consumed by seven separate
+This is **not** a book. It's the shared toolkit consumed by eight separate
 book repos (`pxrsurface-guide`, `lookdev-book`, `pipeline-book`,
 `raytracing-book`, `atmosfera_chmury_book`, `optyka-book`,
-`gamedev-vfx-book`), each
+`gamedev-vfx-book`, `git-book`), each
 independently deployed to its own GitHub Pages site. Nothing here gets built or deployed on its own —
 it exists to be **copied** into a consuming book's `assets/` folder.
 

@@ -3,6 +3,30 @@
 Plain dated log, no version numbers — consuming books check this before
 re-copying a file to see what changed since their last copy.
 
+## 2026-09-08 — eighth book listed
+
+- **`index.html`, `README.md`, `CLAUDE.md`** — added the eighth book,
+  *Git dla Artystów Technicznych* (`git-book`), and updated the "seven
+  books" counts everywhere they appeared, including the meta description
+  and both hero paragraphs. Polish only, six parts, 30 short chapters
+  (700–1200 words each) and 9 appendices, all written. Live at
+  https://bartoszskrzypiec.github.io/git-book/.
+  EN/PL span balance unchanged in kind (39 en / 41 pl — the two-span gap is
+  still the `<html lang="pl">` root plus the language switch).
+- **No shared file changed.** Nothing in `assets/` or `patterns/` was
+  touched, so no consuming book needs to re-copy anything on account of
+  this entry.
+
+  Worth noting for whoever considers promoting something: this book carries
+  its own widget engine (`gitgraph.js` — an in-memory micro-git plus an SVG
+  renderer showing the local repo and origin side by side) and it stays in
+  that book for now. It has exactly one consumer, which is below the bar in
+  `CLAUDE.md` — the same bar `sky3d.js` cleared only after a second book
+  wanted it. It is also **a classic script, not an ES module**, deliberately:
+  modules fetched from `file://` are blocked by CORS, and that book is meant
+  to open straight off disk. Anything promoted here would have to keep that
+  property or document the loss.
+
 ## 2026-09-07 — two missing tokens added to the CSS contract
 
 - **`docs/INTEGRATION.md`** — the token list for `widgets.css` was
