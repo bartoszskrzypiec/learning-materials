@@ -39,8 +39,14 @@
 
 /* On bilingual pages the brand and the switch hold the top row, and the
    (longer) link list gets a row of its own underneath. Without this the
-   switch wraps below the links and ends up bottom-left. */
-.topnav--i18n .lang-switch { order: 2; margin-left: auto; }
+   switch wraps below the links and ends up bottom-left.
+   flex-wrap belongs here, not in the book's own .topnav rule: flex-basis
+   100% only moves the links to their own row in a wrapping container, and
+   in a nowrap one they instead squeeze the switch until its first button
+   is clipped. flex-shrink guards the pill even where a book's nav is laid
+   out some other way. */
+.topnav--i18n { flex-wrap: wrap; }
+.topnav--i18n .lang-switch { order: 2; margin-left: auto; flex-shrink: 0; }
 .topnav--i18n .topnav__links { order: 3; flex-basis: 100%; }
 
 :root.js .lang-switch {
