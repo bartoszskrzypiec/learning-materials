@@ -3,6 +3,27 @@
 Plain dated log, no version numbers — consuming books check this before
 re-copying a file to see what changed since their last copy.
 
+## 2026-10-06 — bilingual nav no longer needs the book to opt into wrapping
+
+- **`assets/css/widgets.css`** — `.topnav--i18n` now sets `flex-wrap: wrap`
+  itself, and `.topnav--i18n .lang-switch` gets `flex-shrink: 0`.
+  The rule that moves the nav links to their own row (`flex-basis: 100%`)
+  only does that in a *wrapping* flex container. In a `nowrap` nav — which
+  is what `lookdev-book`'s `.topnav` declares, and nothing in the contract
+  said otherwise — the links instead stayed on row one and squeezed the
+  switch until its `overflow: hidden` pill clipped the first button's
+  label. It reads as a rendering glitch, not as a missing property, so it
+  survived a whole chapter's worth of bilingual pages before anyone caught
+  it in a browser.
+  **Re-copy worth doing for any book with a language switch** whose nav
+  doesn't already wrap: `pxrsurface-guide` and `lookdev-book` today.
+  `lookdev-book` already carries the fixed copy; the others re-copy on
+  their own schedule as usual.
+- **`docs/INTEGRATION.md`** — the language-switch section now states that
+  the modifier handles wrapping itself, and flags the one case still left
+  to the consuming book (a nav laid out with grid or fixed positioning,
+  where the pill may not get its intrinsic width).
+
 ## 2026-09-08 — eighth book listed
 
 - **`index.html`, `README.md`, `CLAUDE.md`** — added the eighth book,

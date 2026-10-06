@@ -423,6 +423,15 @@ Swap which button starts `is-active`/`aria-pressed="true"` to match your
 it lives in — `widgets.css` uses that class to keep the switch pinned
 top-right instead of wrapping under a long link list.
 
+That modifier sets `flex-wrap: wrap` on the nav itself, so the switch and
+the brand share the first row and the links drop to a second one. It does
+**not** require your `.topnav` to declare `flex-wrap` — it used to, which
+was a silent trap: in a `nowrap` nav the links stayed on row one and
+squeezed the switch until its `overflow: hidden` pill clipped the first
+button's label, which looks like a rendering glitch rather than a CSS
+contract gap. If your nav is laid out some other way entirely (grid, fixed
+positioning), check that the pill still gets its intrinsic width.
+
 ## The bilingual content rule
 
 Every translatable block ships **twice**, as `lang="en"`/`lang="pl"`
